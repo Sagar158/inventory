@@ -59,6 +59,14 @@
             <span class="link-title">{{ trans('general.profile') }}</span>
             </a>
         </li>
+
+        <li class="nav-item">
+            <a href="{{ route('slider.index') }}" class="nav-link">
+                <i class="link-icon" data-feather="sliders"></i>
+                <span class="link-title">Slides</span>
+            </a>
+        </li>
+
         @can('viewAny',\App\Models\User::class)
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#users" role="button" aria-expanded="false" aria-controls="users">

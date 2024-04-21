@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\ThemeController;
+use App\Http\Controllers\SliderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ProductsController;
@@ -33,6 +34,17 @@ Route::middleware(['auth', 'locale'])->group(function () {
 
     Route::controller(DashboardController::class)->group(function(){
         Route::get('/dashboard','data')->name('dashboard');
+    });
+
+    Route::name('slider.')->prefix('slider')->controller(SliderController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/store', 'store')->name('store');
+        Route::get('/edit/{id}', 'edit')->name('edit');
+        Route::post('/update/{id}', 'update')->name('update');
+        Route::get('/show/{id}', 'show')->name('show');
+        Route::post('/delete/{id}', 'destroy')->name('destroy');
+        Route::get('data','getSlidersData')->name('getSlidersData');
     });
 
     Route::name('usertype.')->prefix('usertype')->controller(UserTypeController::class)->group(function(){
