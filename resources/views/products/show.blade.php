@@ -72,7 +72,7 @@
                           <tbody>
                              <tr>
                                 <th scope="row">{{ trans('general.status') }}</th>
-                                <td><span class="{{ $product->status == 'active' ? 'text-success' : 'text-danger' }}">{{ \App\Helpers\Helper::$status[$product->status] }}</span></td>
+                                <td><span class="{{ $product->status == 'available' ? 'text-success' : 'text-danger' }}">{{ \App\Models\Products::$status[$product->status] }}</span></td>
                              </tr>
                              <tr>
                                 <th scope="row">{{ trans('general.product_number') }}</th>
