@@ -3,7 +3,7 @@
 
       <h1 class="logo me-auto">
         <a href="{{ route('home') }}">
-            <img src="{{ asset('assets/images/favicon.png') }}" style="width: 150px !important; height:50px !important;" alt="">
+            <img src="{{ asset('assets/images/logo.jpg') }}" style="width: 150px !important; height:50px !important;" alt="">
         </a>
       </h1>
       <!-- Uncomment below if you prefer to use an image logo -->

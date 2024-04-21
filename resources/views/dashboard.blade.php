@@ -8,7 +8,7 @@
             <div class="col-xl-6 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="card-title">Quarterely Product Sales</h6>
+                        <h6 class="card-title">{{ trans('general.quarterly_product_sales') }}</h6>
                         <div id="quarterlyProdutSales"></div>
                     </div>
                 </div>
@@ -16,7 +16,7 @@
             <div class="col-xl-6 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="card-title">Yearly Sales</h6>
+                        <h6 class="card-title">{{ trans('general.yearly_sales') }}</h6>
                         <div id="yearlySales"></div>
                     </div>
                 </div>
@@ -26,7 +26,7 @@
             <div class="col-xl-6 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="card-title">Product Category Wise</h6>
+                        <h6 class="card-title">{{ trans('general.product_category_wise') }}</h6>
                         <div id="productWiseChart"></div>
                     </div>
                 </div>
@@ -34,7 +34,7 @@
             <div class="col-xl-6 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="card-title">Product Supplier Wise</h6>
+                        <h6 class="card-title">{{ trans('general.product_supplier_wise') }}</h6>
                         <div id="productWiseSupplier"></div>
                     </div>
                 </div>

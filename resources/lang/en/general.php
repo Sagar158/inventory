@@ -65,5 +65,9 @@ return
     'reporting' => 'Reporting',
     'manage_users' => 'Manage Users',
     'logout' => 'Logout',
+    'quarterly_product_sales' => 'Quarterely Product Sales',
+    'yearly_sales' => 'Yearly Sales',
+    'product_category_wise' => 'Product Category Wise',
+    'product_supplier_wise' => 'Product Supplier Wise'
 ];
 ?>

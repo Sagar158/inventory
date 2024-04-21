@@ -63,6 +63,10 @@ return [
     'reporting' => 'Rapportage',
     'manage_users' => 'Gérer les utilisateurs',
     'logout' => 'Déconnexion',
+    'quarterly_product_sales' => 'Ventes de produits trimestrielles',
+    'yearly_sales' => 'Ventes annuelles',
+    'product_category_wise' => 'Catégorie de produit sage',
+    'product_supplier_wise' => 'Fournisseur de produits judicieux'
 ];
 
 

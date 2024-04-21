@@ -3,9 +3,8 @@
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <div class="auth-form-wrapper px-4 py-5">
-        <a href="#" class="noble-ui-logo d-block mb-2">
-            Gestionnaire<span>Janat</span>
-
+        <a href="{{ route('login') }}" class="noble-ui-logo d-block mb-2">
+            <img src="{{ asset('/assets/images/logo.jpg') }}" style="width:200px;" alt="">
         </a>
         <h5 class="text-muted font-weight-normal mb-4">Welcome back! Log in to your account.</h5>
         <form method="POST" action="{{ route('login') }}">
@@ -23,7 +22,7 @@
                 {{ __('Log in') }}
             </x-primary-button>
             <br>
-            <a href="{{ route('register') }}">Want to create new account?</a>
+            {{-- <a href="{{ route('register') }}">Want to create new account?</a> --}}
         </form>
     </div>
 
