@@ -67,6 +67,32 @@ return array(
             'display'    => true,
         ),
     ),
+    'Categories' => array(
+        array(
+            'permission' => 'categories.view',
+            'label'      => 'View',
+            'note'       => '',
+            'display'    => true,
+        ),
+        array(
+            'permission' => 'categories.create',
+            'label'      => 'Create',
+            'note'       => '',
+            'display'    => true,
+        ),
+        array(
+            'permission' => 'categories.edit',
+            'label'      => 'Edit',
+            'note'       => '',
+            'display'    => true,
+        ),
+        array(
+            'permission' => 'categories.delete',
+            'label'      => 'Delete',
+            'note'       => '',
+            'display'    => true,
+        ),
+    ),
     'Suppliers' => array(
         array(
             'permission' => 'supplier.view',

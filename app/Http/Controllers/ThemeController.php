@@ -12,4 +12,15 @@ class ThemeController extends Controller
 
         return redirect()->back();
     }
+
+    public function switchLanguage(Request $request)
+    {
+        $locale = $request->lang;
+        if (in_array($locale, ['en', 'fr']))
+        {
+            Session::put('locale', $locale);
+        }
+
+        return redirect()->back()->with('success', 'Language Changed Successfully');
+    }
 }

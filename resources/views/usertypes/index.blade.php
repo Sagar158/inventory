@@ -1,6 +1,6 @@
 <x-app-layout title="{{ $title }}">
     <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
-        <x-page-heading title="{{ __('Permissions') }}"></x-page-heading>
+        <x-page-heading title="{{ trans('general.permissions') }}"></x-page-heading>
         <x-alert></x-alert>
         <div class="container-fluid card mt-3">
             <div class="row card-body">
@@ -9,8 +9,8 @@
                         <table id="dataTable" class="table">
                           <thead>
                             <tr>
-                              <th>Name</th>
-                              <th>Action</th>
+                              <th>{{ trans('general.name') }}</th>
+                              <th>{{ trans('general.action') }}</th>
                             </tr>
                           </thead>
                           <tbody>

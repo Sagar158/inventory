@@ -5,6 +5,7 @@ use App\Models\Appointments;
 use App\Models\User;
 use App\Models\UserType;
 use App\Models\HealthCare;
+use App\Models\Products;
 use App\Models\Specializations;
 use Illuminate\Support\Facades\Storage;
 
@@ -12,6 +13,8 @@ class Helper
 {
     public static $gender = array('male' => 'Male', 'female' => 'Female', 'other' => 'Other');
     public static $type = array('visit' => 'Visit', 'recording' => 'Recording');
+
+    public static $status = ['active' => 'Active', 'inactive' => 'Inactive'];
 
     public static $weekdays = array('monday' => 'Monday', 'tuesday' => 'Tuesday', 'wednesday' => 'Wednesday', 'thursday' => 'Thursday', 'friday' => 'Friday','saturday' => 'Saturday','sunday' => 'Sunday');
 
@@ -43,42 +46,23 @@ class Helper
         return $patients->toArray();
     }
 
-    public static function fetchSpecializations()
-    {
-        return Specializations::select('id','name')->pluck('name','id')->toArray();
-    }
-    public static function fetchHealthCare()
-    {
-        return HealthCare::select('id','name')->pluck('name','id')->toArray();
-    }
-
     public static function imageUpload($file, $existingFile = '')
     {
         $path = $file->store('public/uploads');
         return Storage::url($path);
     }
 
-    public static function fetchHealthCareCenters()
-    {
-        return HealthCare::select('id','name')->get();
-    }
-    public static function generateUniqueKey($model)
+    public static function generateUniqueKey()
     {
         do {
             $randomNumber = mt_rand(100000, 999999);
-            $uniqueKey = 'AP-' . $randomNumber;
-            $existingRequest = Appointments::where('appointment_number', $uniqueKey)->first();
+            $uniqueKey = 'P-' . $randomNumber;
+            $existingRequest = Products::where('product_number', $uniqueKey)->first();
 
             if (!$existingRequest)
                 return $uniqueKey;
         } while (true);
     }
-
-    public static function fetchCompletedAppointments()
-    {
-        return Appointments::where('status','completed')->where('type','recording')->pluck('appointment_number','id')->toArray();
-    }
-
 
 }
 ?>

@@ -1,7 +1,7 @@
 <x-app-layout title="{{ $title }}">
     <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
-        <x-page-heading title="{{ trans('general.users') }}"></x-page-heading>
-        <x-right-side-button link="{{ route('users.create') }}" title="Create"></x-right-side-button>
+        <x-page-heading title="{{ trans('general.suppliers') }}"></x-page-heading>
+        <x-right-side-button link="{{ route('suppliers.create') }}" title="Create"></x-right-side-button>
         <x-alert></x-alert>
         <div class="container-fluid card mt-3">
             <div class="row card-body">
@@ -10,12 +10,10 @@
                         <table id="dataTable" class="table">
                           <thead>
                             <tr>
-                              <th>{{ trans('general.user_name') }}</th>
+                              <th>{{ trans('general.supplier_name') }}</th>
                               <th>{{ trans('general.email') }}</th>
-                              <th>{{ trans('general.user_type') }}</th>
-                              <th>{{ trans('general.date_of_birth') }}</th>
-                              <th>{{ trans('general.contact_number') }}</th>
-                              <th>{{ trans('general.gender') }}</th>
+                              <th>{{ trans('general.phone') }}</th>
+                              <th>{{ trans('general.address') }}</th>
                               <th>{{ trans('general.action') }}</th>
                             </tr>
                           </thead>
@@ -35,14 +33,12 @@
                 $('#dataTable').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: '{{ route("users.getUserData") }}',
+                    ajax: '{{ route("suppliers.getSupplierData") }}',
                     columns: [
-                        { data: 'username', name: 'username' },
+                        { data: 'name', name: 'name' },
                         { data: 'email', name: 'email' },
-                        { data: 'usertype', name: 'usertype' },
-                        { data: 'date_of_birth', name: 'date_of_birth' },
-                        { data: 'contact_number', name: 'contact_number' },
-                        { data: 'gender', name: 'gender' },
+                        { data: 'phone', name: 'phone' },
+                        { data: 'address', name: 'address' },
                         { data: 'action', name: 'action', orderable: false, searchable: false }
                     ]
                 });

@@ -87,7 +87,7 @@ class UserTypeController extends Controller
                             <div class="btn-group" role="group">
                                 <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
                                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
-                                    <a class="dropdown-item" href="'.route('usertype.permissions.edit', $vehicle->id).'">Edit Permissions</a>
+                                    <a class="dropdown-item" href="'.route('usertype.permissions.edit', $vehicle->id).'">'.trans('general.edit').'</a>
                                 </div>
                             </div>
                         ';

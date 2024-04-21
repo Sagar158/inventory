@@ -164,8 +164,8 @@ class UserController extends Controller
                             <div class="btn-group" role="group">
                                 <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
                                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
-                                    <a class="dropdown-item" href="'.route('users.edit', $user->id).'">Edit</a>
-                                    <a class="dropdown-item delete-record" href="#" data-route="'.route('users.destroy', $user->id).'" data-id="'.$user->id.'">Delete</a>
+                                    <a class="dropdown-item" href="'.route('users.edit', $user->id).'">'.trans('general.edit').'</a>
+                                    <a class="dropdown-item delete-record" href="#" data-route="'.route('users.destroy', $user->id).'" data-id="'.$user->id.'">'.trans('general.delete').'</a>
                                 </div>
                             </div>
                         ';

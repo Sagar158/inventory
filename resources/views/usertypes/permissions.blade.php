@@ -13,9 +13,9 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Permission Name</th>
-                                <th>Grant</th>
-                                <th>Deny</th>
+                                <th>{{ trans('general.permission_name') }}</th>
+                                <th>{{ trans('general.grant') }}</th>
+                                <th>{{ trans('general.deny') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -38,7 +38,7 @@
 
                     <div class="col-lg-12 col-sm-12 col-md-12 mt-2">
                         <x-primary-button class="btn btn-primary">
-                            {{ __('Save') }}
+                            {{ trans('general.save') }}
                         </x-primary-button>
                         <x-back-button></x-back-button>
                     </div>

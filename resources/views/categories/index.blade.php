@@ -1,7 +1,7 @@
 <x-app-layout title="{{ $title }}">
     <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
-        <x-page-heading title="{{ trans('general.users') }}"></x-page-heading>
-        <x-right-side-button link="{{ route('users.create') }}" title="Create"></x-right-side-button>
+        <x-page-heading title="{{ trans('general.categories') }}"></x-page-heading>
+        <x-right-side-button link="{{ route('categories.create') }}" title="Create"></x-right-side-button>
         <x-alert></x-alert>
         <div class="container-fluid card mt-3">
             <div class="row card-body">
@@ -10,12 +10,8 @@
                         <table id="dataTable" class="table">
                           <thead>
                             <tr>
-                              <th>{{ trans('general.user_name') }}</th>
-                              <th>{{ trans('general.email') }}</th>
-                              <th>{{ trans('general.user_type') }}</th>
-                              <th>{{ trans('general.date_of_birth') }}</th>
-                              <th>{{ trans('general.contact_number') }}</th>
-                              <th>{{ trans('general.gender') }}</th>
+                              <th>{{ trans('general.category_name') }}</th>
+                              <th>{{ trans('general.status') }}</th>
                               <th>{{ trans('general.action') }}</th>
                             </tr>
                           </thead>
@@ -23,7 +19,6 @@
                           </tbody>
                         </table>
                       </div>
-
                 </div>
             </div>
         </div>
@@ -35,14 +30,10 @@
                 $('#dataTable').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: '{{ route("users.getUserData") }}',
+                    ajax: '{{ route("categories.getCategoryData") }}',
                     columns: [
-                        { data: 'username', name: 'username' },
-                        { data: 'email', name: 'email' },
-                        { data: 'usertype', name: 'usertype' },
-                        { data: 'date_of_birth', name: 'date_of_birth' },
-                        { data: 'contact_number', name: 'contact_number' },
-                        { data: 'gender', name: 'gender' },
+                        { data: 'name', name: 'name' },
+                        { data: 'status', name: 'status' },
                         { data: 'action', name: 'action', orderable: false, searchable: false }
                     ]
                 });

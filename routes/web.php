@@ -9,7 +9,9 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserTypeController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ReportingController;
+use App\Http\Controllers\CategoriesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,12 +28,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'locale'])->group(function () {
 
+    Route::controller(DashboardController::class)->group(function(){
+        Route::get('/dashboard','data')->name('dashboard');
+    });
 
     Route::name('usertype.')->prefix('usertype')->controller(UserTypeController::class)->group(function(){
         Route::get('/', 'index')->name('index');
@@ -44,8 +46,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/','index')->name('index');
         Route::get('/create', 'create')->name('create');
         Route::post('/store', 'store')->name('store');
-        Route::get('/edit/{id}', 'edit')->name('edit');
-        Route::post('/update/{id}', 'update')->name('update');
+        Route::get('{id}/edit/', 'edit')->name('edit');
+        Route::post('{id}/update/', 'update')->name('update');
+        Route::get('{id}/show/', 'show')->name('show');
         Route::post('/delete/{id}', 'destroy')->name('destroy');
         Route::get('data','getProductData')->name('getProductData');
         Route::post('change/status/{parameterId}','changeStatus')->name('changeStatus');
@@ -58,8 +61,23 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/{id}', 'edit')->name('edit');
         Route::post('/update/{id}', 'update')->name('update');
         Route::post('/delete/{id}', 'destroy')->name('destroy');
-        Route::get('data','getProductData')->name('getProductData');
+        Route::get('data','getSupplierData')->name('getSupplierData');
         Route::post('change/status/{parameterId}','changeStatus')->name('changeStatus');
+        Route::get('getData','getData')->name('getData');
+    });
+
+
+
+    Route::name('categories.')->controller(CategoriesController::class)->prefix('categories')->group(function(){
+        Route::get('/','index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/store', 'store')->name('store');
+        Route::get('/{id}/edit', 'edit')->name('edit');
+        Route::get('/{id}/show', 'show')->name('show');
+        Route::post('/{id}/update', 'update')->name('update');
+        Route::post('/delete/{id}', 'destroy')->name('destroy');
+        Route::get('data','getCategoryData')->name('getCategoryData');
+        Route::get('getData','getData')->name('getData');
     });
 
     Route::name('sales.')->prefix('sales')->controller(SalesController::class)->group(function(){
@@ -104,7 +122,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('theme/change/{theme}',[ThemeController::class,'changeTheme'])->name('theme.change');
-
+    Route::get('/change-language', [ThemeController::class, 'switchLanguage'])->name('change_language')->middleware('locale');
 });
 
 require __DIR__.'/auth.php';

@@ -16,6 +16,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Models\User' => 'App\Policies\UserPolicy',
         'App\Models\UserType' => 'App\Policies\UserTypePolicy',
         'App\Models\Supplier' => 'App\Policies\SupplierPolicy',
+        'App\Models\Products' => 'App\Policies\ProductPolicy',
     ];
 
     /**
@@ -23,6 +24,6 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        app()->setLocale(session('locale', config('app.fallback_locale')));
     }
 }
