@@ -46,7 +46,7 @@
                                         </div>
                                         <div class="product-caption">
                                             <div class="product-tags">
-                                                <a href="javascript:void(0);">{{ \App\Models\Products::$categories[$product->category_id] }}</a>
+                                                {{-- <a href="javascript:void(0);">{{ \App\Models\Products::$categories[$product->category_id] }}</a> --}}
                                             </div>
                                             <h4 class="product-title">
                                                 <a href="javascript:void(0);">{{ ucwords($product->name) }}</a>
