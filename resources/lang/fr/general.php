@@ -66,7 +66,12 @@ return [
     'quarterly_product_sales' => 'Ventes de produits trimestrielles',
     'yearly_sales' => 'Ventes annuelles',
     'product_category_wise' => 'Catégorie de produit sage',
-    'product_supplier_wise' => 'Fournisseur de produits judicieux'
+    'product_supplier_wise' => 'Fournisseur de produits judicieux',
+    'show' => 'Montrer',
+    'contact-us' => 'Contactez-nous',
+    'slides' => 'Diapositives',
+    'information' => 'Information',
+
 ];
 
 

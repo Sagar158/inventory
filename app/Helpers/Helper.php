@@ -1,12 +1,13 @@
 <?php
 namespace App\Helpers;
 
-use App\Models\Appointments;
 use App\Models\User;
+use App\Models\Products;
 use App\Models\UserType;
 use App\Models\HealthCare;
-use App\Models\Products;
+use App\Models\Appointments;
 use App\Models\Specializations;
+use App\Models\ContactInformation;
 use Illuminate\Support\Facades\Storage;
 
 class Helper
@@ -62,6 +63,11 @@ class Helper
             if (!$existingRequest)
                 return $uniqueKey;
         } while (true);
+    }
+
+    public static function information()
+    {
+        return ContactInformation::first();
     }
 
 }

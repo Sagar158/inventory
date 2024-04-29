@@ -60,13 +60,6 @@
             </a>
         </li>
 
-        <li class="nav-item">
-            <a href="{{ route('slider.index') }}" class="nav-link">
-                <i class="link-icon" data-feather="sliders"></i>
-                <span class="link-title">Slides</span>
-            </a>
-        </li>
-
         @can('viewAny',\App\Models\User::class)
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#users" role="button" aria-expanded="false" aria-controls="users">
@@ -90,6 +83,28 @@
                 </div>
             </li>
         @endcan
+        <li class="nav-item nav-category">{{ trans('general.settings') }}</li>
+        <li class="nav-item">
+            <a href="{{ route('contact-us.index') }}" class="nav-link">
+                <i class="link-icon" data-feather="phone-call"></i>
+                <span class="link-title">{{ trans('general.contact-us') }}</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{{ route('slider.index') }}" class="nav-link">
+                <i class="link-icon" data-feather="sliders"></i>
+                <span class="link-title">{{ trans('general.slides') }}</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{{ route('contact-us.information') }}" class="nav-link">
+                <i class="link-icon" data-feather="info"></i>
+                <span class="link-title">{{ trans('general.information') }}</span>
+            </a>
+        </li>
+
       </ul>
     </div>
 </nav>

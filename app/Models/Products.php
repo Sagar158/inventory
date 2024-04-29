@@ -10,6 +10,8 @@ class Products extends Model
     use HasFactory;
     public static $status = ['available' => 'Available', 'not_available' => 'Not Available'];
 
+    public static $currency = 'MAD';
+
     public function details()
     {
         return $this->hasMany(ProductDetails::class,'product_id','id');

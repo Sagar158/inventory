@@ -60,7 +60,7 @@
                        <div class="mt-4 mt-xl-3">
                           <h5><a href="javascript: void(0);" class="text-primary">{{ $product->category->name }}</a></h5>
                           <h5 class="mt-1 mb-3">{{ $product->product_name }}</h5>
-                          <h5 class="mb-4">{{ trans('general.price') }} : <span class="text-muted me-2">${{ number_format($product->price) }} {{ trans('general.usd') }}</span></h5>
+                          <h5 class="mb-4">{{ trans('general.price') }} : <span class="text-muted me-2">{{ \App\Models\Products::$currency }} {{ number_format($product->price) }}</span></h5>
                           <p class="text-muted mb-4 mt-5">{!! $product->description !!}</p>
                        </div>
                     </div>

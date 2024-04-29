@@ -10,9 +10,11 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserTypeController;
+use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ReportingController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\Frontend\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,10 +27,19 @@ use App\Http\Controllers\CategoriesController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::controller(HomeController::class)->group(function () {
+    Route::get('the-team','team')->name('management-team');
+    Route::get('/','index')->name('home');
+    Route::get('about-us','aboutus')->name('about-us');
+    Route::get('product','products')->name('product');
+    Route::get('event','events')->name('event');
+    Route::get('contactus','contactus')->name('contactus');
+    Route::post('contact/store','contactStore')->name('contactStore');
+    Route::get('certificates','certificates')->name('certificates');
+    Route::get('privacypolicy','privacypolicy')->name('privacypolicy');
+    Route::get('terms','terms')->name('terms');
+    Route::get('event/{id}/details','eventDetails')->name('eventDetails');
 });
-
 
 Route::middleware(['auth', 'locale'])->group(function () {
 
@@ -127,6 +138,15 @@ Route::middleware(['auth', 'locale'])->group(function () {
         Route::post('/delete/{id}', 'destroy')->name('destroy');
         Route::get('data','getUserData')->name('getUserData');
         Route::post('change/status/{parameterId}','changeStatus')->name('changeStatus');
+    });
+
+    Route::name('contact-us.')->prefix('contact-us')->controller(ContactUsController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('data','getContactData')->name('getContactData');
+        Route::get('show/{id}','show')->name('show');
+        Route::post('/delete/{id}', 'destroy')->name('destroy');
+        Route::get('/information', 'information')->name('information');
+        Route::post('information/update/{id}', 'update')->name('information.update');
     });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

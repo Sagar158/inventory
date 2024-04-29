@@ -61,6 +61,7 @@ return
     'dashboard' => 'Dashboard',
     'inventory' => 'Inventory',
     'sales' => 'Sales',
+    'show' => 'Show',
     'reports' => 'Reports',
     'reporting' => 'Reporting',
     'manage_users' => 'Manage Users',
@@ -68,6 +69,9 @@ return
     'quarterly_product_sales' => 'Quarterely Product Sales',
     'yearly_sales' => 'Yearly Sales',
     'product_category_wise' => 'Product Category Wise',
-    'product_supplier_wise' => 'Product Supplier Wise'
+    'product_supplier_wise' => 'Product Supplier Wise',
+    'contact-us' => 'Contact Us',
+    'slides' => 'Slides',
+    'information' => 'Information',
 ];
 ?>

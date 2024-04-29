@@ -167,7 +167,7 @@ class ProductsController extends Controller
                 return ucfirst($product->status);
             })
             ->editColumn('price',function($product){
-                return '$'.$product->price;
+                return Products::$currency.''.$product->price;
             })
             ->addColumn('supplier',function($product){
                 return $product->supplier->name;
