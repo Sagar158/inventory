@@ -71,7 +71,16 @@ return [
     'contact-us' => 'Contactez-nous',
     'slides' => 'Diapositives',
     'information' => 'Information',
-
+    'country' => 'Pays',
+    'state' => 'État',
+    'city' => 'Ville',
+    'zipcode' => 'Code postal',
+    'address' => 'Adresse',
+    'order_notes' => 'Notes d\'ordre',
+    'product' => 'Produit',
+    'subtotal' => 'Total',
+    'place_order' => 'Passer la commande',
+    'billing_details' => 'Détails de la facturation',
 ];
 
 

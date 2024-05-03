@@ -145,32 +145,32 @@ return array(
             'display'    => true,
         ),
     ),
-    'Slides' => array(
-        array(
-            'permission' => 'slider.view',
-            'label'      => 'View',
-            'note'       => '',
-            'display'    => true,
-        ),
-        array(
-            'permission' => 'slider.create',
-            'label'      => 'Create',
-            'note'       => '',
-            'display'    => true,
-        ),
-        array(
-            'permission' => 'slider.edit',
-            'label'      => 'Edit',
-            'note'       => '',
-            'display'    => true,
-        ),
-        array(
-            'permission' => 'slider.delete',
-            'label'      => 'Delete',
-            'note'       => '',
-            'display'    => true,
-        ),
-    ),
+    // 'Slides' => array(
+    //     array(
+    //         'permission' => 'slider.view',
+    //         'label'      => 'View',
+    //         'note'       => '',
+    //         'display'    => true,
+    //     ),
+    //     array(
+    //         'permission' => 'slider.create',
+    //         'label'      => 'Create',
+    //         'note'       => '',
+    //         'display'    => true,
+    //     ),
+    //     array(
+    //         'permission' => 'slider.edit',
+    //         'label'      => 'Edit',
+    //         'note'       => '',
+    //         'display'    => true,
+    //     ),
+    //     array(
+    //         'permission' => 'slider.delete',
+    //         'label'      => 'Delete',
+    //         'note'       => '',
+    //         'display'    => true,
+    //     ),
+    // ),
     'Reporting' => array(
         array(
             'permission' => 'reporting.view',

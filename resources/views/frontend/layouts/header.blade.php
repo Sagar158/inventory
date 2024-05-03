@@ -101,8 +101,9 @@
 
                         <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
                             <li><a href="{{ route('home') }}">Home</a></li>
-                            <li><a href="{{ route('product') }}">Products</a></li>
+                            <li><a href="{{ route('product') }}">All Products</a></li>
                             <li><a href="{{ route('contactus') }}">Contact us</a></li>
+                            <li><a href="{{ route('my-orders') }}">My Orders</a></li>
                             @if(Auth::check())
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Explore Admin</a>
@@ -122,6 +123,24 @@
                         </ul>
                     </div>
                     <!-- /.navbar-collapse -->
+
+                    <div class="attr-right">
+                        <!-- Start Atribute Navigation -->
+                        <div class="attr-nav">
+                           <ul>
+                              <li class="dropdown">
+                                <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                                    <i class="fa fa-shopping-cart fa-lg"></i>
+                                    <span class='badge badge-warning' id='lblCartCount'>0</span>
+                                </a>
+                                <ul class="dropdown-menu normalmenu" style="width: 28rem !important;">
+                                    <li class="p-2 cart theme-color">No product in cart</li>
+                                </ul>
+                              </li>
+                           </ul>
+                        </div>
+                        <!-- End Atribute Navigation -->
+                     </div>
 
                     <div class="attr-right">
                         <!-- Start Atribute Navigation -->

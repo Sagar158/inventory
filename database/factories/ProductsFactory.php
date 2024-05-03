@@ -26,8 +26,8 @@ class ProductsFactory extends Factory
         return [
             'product_name' => $this->faker->sentence(3),
             'product_number' => $this->faker->unique()->randomNumber(5),
-            'supplier_id' => \App\Models\Supplier::factory()->create()->id,
-            'category_id' => \App\Models\Categories::factory()->create()->id,
+            'supplier_id' => \App\Models\Supplier::all()->random()->id,
+            'category_id' => \App\Models\Categories::all()->random()->id,
             'price' => $this->faker->randomFloat(2, 10, 1000),
             'quantity' => $this->faker->numberBetween(1, 100),
             'description' => $this->faker->paragraph,

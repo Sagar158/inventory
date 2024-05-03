@@ -4304,7 +4304,8 @@ fieldset:disabled .btn {
 }
 
 .tab-content>.active {
-    display: block
+    display: block;
+    text-align: left !important;
 }
 
 .navbar {

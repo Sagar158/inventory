@@ -13,16 +13,6 @@
                         <!-- End Tab Nav -->
                     </div>
                 </div>
-
-                <div class="col-lg-5 text-right">
-                    <p>
-                        Showing {{ $products->firstItem() }} – {{ $products->lastItem() }} of {{ $products->total() }} results
-                    </p>
-                    <select name="sort_by" id="sort_by">
-                        <option value="id" {{ request()->get('sort_by') == 'id' ? 'selected' : '' }}>Short by latest</option>
-                        <option value="category_id" {{ request()->get('sort_by') == 'category_id' ? 'selected' : '' }}>Short by Relevant</option>
-                      </select>
-                </div>
             </div>
         </div>
         <div class="row">
@@ -32,40 +22,46 @@
 
                     <!-- Strt Product Grid Vies -->
                     <div class="tab-pane fade show active" id="grid-tab" role="tabpanel" aria-labelledby="grid-tab-control">
-                        <ul class="vt-products columns-4">
+                        @if(!empty($categories))
+                            @foreach ($categories as $category)
+                            <h4 class="font-weight-bold">{{ $category->name }}</h4>
+                            <ul class="vt-products columns-4">
 
-                            <!-- Single product -->
-                            @if(!empty($products))
-                             @foreach ($products as $product)
-                                <li class="product">
-                                    <div class="product-contents">
-                                        <div class="product-image">
-                                            <a href="javascript:void(0);">
-                                                <img style="height:150px !important;" src="{{ isset($product->primaryImage->image) ? asset($product->primaryImage->image) : asset('assets/images/placeholder.jpg') }}" alt="Product">
-                                            </a>
-                                        </div>
-                                        <div class="product-caption">
-                                            <div class="product-tags">
-                                                {{-- <a href="javascript:void(0);">{{ \App\Models\Products::$categories[$product->category_id] }}</a> --}}
+                                <!-- Single product -->
+                                @if(!empty($category->products))
+                                 @foreach ($category->products as $product)
+                                    <li class="product">
+                                        <div class="product-contents">
+                                            <div class="product-image">
+                                                <a href="javascript:void(0);">
+                                                    <img style="height:150px !important;" src="{{ isset($product->primaryImage->image) ? asset($product->primaryImage->image) : asset('assets/images/placeholder.jpg') }}" alt="Product">
+                                                </a>
                                             </div>
-                                            <h4 class="product-title">
-                                                <a href="javascript:void(0);">{{ ucwords($product->name) }}</a>
-                                            </h4>
+                                            <div class="product-caption text-center">
+                                                <div class="product-tags">
+                                                    {{-- <a href="javascript:void(0);">{{ \App\Models\Products::$categories[$product->category_id] }}</a> --}}
+                                                </div>
+                                                <h4 class="product-title">
+                                                    <a href="javascript:void(0);">{{ ucwords($product->name) }}</a>
+                                                </h4>
+                                                <div class="price text-center">
+                                                    <span class="price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">MAD</span> {{ $product->price }}</span></span>
+                                                </div>
+                                                <a href="{{ route('product.details', $product->id) }}" class="btn btn-theme secondary btn-sm radius animation ajax_add_to_cart add_to_cart_button" data-product_id="2068" data-product_sku="woo-bell-pepper"><i class="fas fa-shopping-cart"></i><span>View Product</span></a>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
-                             @endforeach
-                            @endif
+                                    </li>
+                                 @endforeach
+                                @endif
 
 
-                        </ul>
+                            </ul>
+                            @endforeach
+                        @endif
                     </div>
                 </div>
 
 
-
-                <!-- Pgination -->
-                {{ $products->links() }}
             </div>
         </div>
     </div>

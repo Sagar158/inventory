@@ -13,8 +13,9 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
+        Categories::truncate();
         Categories::factory()
-        ->count(10) // Generate 10 categories
+        ->count(5) // Generate 10 categories
         ->create();
     }
 }

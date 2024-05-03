@@ -28,17 +28,18 @@ use App\Http\Controllers\Frontend\HomeController;
 */
 
 Route::controller(HomeController::class)->group(function () {
-    Route::get('the-team','team')->name('management-team');
     Route::get('/','index')->name('home');
-    Route::get('about-us','aboutus')->name('about-us');
     Route::get('product','products')->name('product');
-    Route::get('event','events')->name('event');
+    Route::get('product/{productId}/detials','productDetails')->name('product.details');
     Route::get('contactus','contactus')->name('contactus');
     Route::post('contact/store','contactStore')->name('contactStore');
-    Route::get('certificates','certificates')->name('certificates');
-    Route::get('privacypolicy','privacypolicy')->name('privacypolicy');
-    Route::get('terms','terms')->name('terms');
-    Route::get('event/{id}/details','eventDetails')->name('eventDetails');
+    Route::get('view-cart','viewCart')->name('viewCart');
+    Route::get('checkout','checkout')->name('checkout');
+    Route::post('order/place','orderPlace')->name('product.placeOrder');
+    Route::get('order/track','trackOrder')->name('order.track');
+    Route::get('thankyou/{orderId}','thankyou')->name('order.thankyou');
+    Route::get('my-orders','myOrders')->name('my-orders');
+
 });
 
 Route::middleware(['auth', 'locale'])->group(function () {
@@ -47,16 +48,16 @@ Route::middleware(['auth', 'locale'])->group(function () {
         Route::get('/dashboard','data')->name('dashboard');
     });
 
-    Route::name('slider.')->prefix('slider')->controller(SliderController::class)->group(function () {
-        Route::get('/', 'index')->name('index');
-        Route::get('/create', 'create')->name('create');
-        Route::post('/store', 'store')->name('store');
-        Route::get('/edit/{id}', 'edit')->name('edit');
-        Route::post('/update/{id}', 'update')->name('update');
-        Route::get('/show/{id}', 'show')->name('show');
-        Route::post('/delete/{id}', 'destroy')->name('destroy');
-        Route::get('data','getSlidersData')->name('getSlidersData');
-    });
+    // Route::name('slider.')->prefix('slider')->controller(SliderController::class)->group(function () {
+    //     Route::get('/', 'index')->name('index');
+    //     Route::get('/create', 'create')->name('create');
+    //     Route::post('/store', 'store')->name('store');
+    //     Route::get('/edit/{id}', 'edit')->name('edit');
+    //     Route::post('/update/{id}', 'update')->name('update');
+    //     Route::get('/show/{id}', 'show')->name('show');
+    //     Route::post('/delete/{id}', 'destroy')->name('destroy');
+    //     Route::get('data','getSlidersData')->name('getSlidersData');
+    // });
 
     Route::name('usertype.')->prefix('usertype')->controller(UserTypeController::class)->group(function(){
         Route::get('/', 'index')->name('index');

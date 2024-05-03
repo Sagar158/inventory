@@ -2,15 +2,20 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Models\Order;
 use App\Models\Teams;
 use App\Models\Events;
 use App\Models\Slider;
 use App\Models\AboutUs;
 use App\Models\Products;
 use App\Models\ContactUs;
+use App\Models\Countries;
+use App\Models\Categories;
 use Illuminate\Http\Request;
 use App\Models\Certifications;
 use App\Http\Controllers\Controller;
+use App\Models\OrderDetails;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -23,23 +28,12 @@ class HomeController extends Controller
 
     public function products()
     {
-        $products = Products::paginate(12);
-        return view('frontend.products',compact('products'));
+        $categories = Categories::with('products')->get();
+        return view('frontend.products',compact('categories'));
     }
 
-    public function events()
-    {
-        $events = Events::orderBy('id','desc')->paginate(5);
-        return view('frontend.events',compact('events'));
-    }
     public function contactus(){
         return view('frontend.contact-us');
-    }
-
-    public function certificates()
-    {
-        $certificates = Certifications::orderBy('id','desc')->get();
-        return view('frontend.certificates',compact('certificates'));
     }
 
     public function contactStore(Request $request)
@@ -54,27 +48,110 @@ class HomeController extends Controller
         return response()->json(['message' => 'Your Query has been successfully submitted to our team. Our team will contact you soon.']);
     }
 
-    public function privacypolicy()
+    public function productDetails($productId)
     {
-        $privacyPolicy = AboutUs::first();
-        return view('frontend.privacypolicy',compact('privacyPolicy'));
-    }
-    public function terms()
-    {
-        $terms = AboutUs::first();
-        return view('frontend.terms',compact('terms'));
+        $product = Products::findOrFail($productId);
+
+        return view('frontend.productDetails', compact('product'));
     }
 
-    public function team()
+    public function viewCart()
     {
-        $teams = Teams::select('name','designation','image','description','mobile')->get();
-        return view('frontend.team',compact('teams'));
+        return view('frontend.viewCart');
     }
 
-    public function eventDetails(Request $request, $eventId)
+    public function checkout()
     {
-        $event = Events::findOrFail($eventId);
-        return view('frontend.event-details',compact('event'));
+        $countries = Countries::select('id','name')->pluck('name','id')->toArray();
+
+        return view('frontend.checkout', compact('countries'));
     }
+
+    public function orderPlace(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            $validatedData = $request->validate([
+                'first_name'        => 'required|string|max:255',
+                'last_name'         => 'required|string|max:255',
+                'email'             => 'required|email|max:255',
+                'phone'             => 'required|numeric',
+                'country_id'        => 'required|integer',
+                'state'             => 'required|string|max:255',
+                'city'              => 'required|string|max:255',
+                'zip_code'          => 'required|string|max:255',
+                'address'           => 'required|string|max:1024',
+                'order_notes'       => 'nullable|string|max:1024',
+                'product_id.*'      => 'required|integer|exists:products,id',
+                'product_price.*'   => 'required|numeric',
+                'quantity.*'        => 'required|integer|min:1'
+            ]);
+
+            $order = new Order;
+            $order->first_name = $validatedData['first_name'];
+            $order->last_name = $validatedData['last_name'];
+            $order->email = $validatedData['email'];
+            $order->phone = $validatedData['phone'];
+            $order->country_id = $validatedData['country_id'];
+            $order->state = $validatedData['state'];
+            $order->city = $validatedData['city'];
+            $order->zip_code = $validatedData['zip_code'];
+            $order->street_address = $validatedData['address'];
+            $order->status = Order::ORDER_PLACED;
+            $order->order_notes = $validatedData['order_notes'];
+            $order->amount = $request->amount;
+            $order->save();
+
+            if (!empty($request->product_id))
+            {
+                foreach ($request->product_id as $key => $productId)
+                {
+                    OrderDetails::create([
+                        'order_id' => $order->id,
+                        'product_id' => $request->product_id[$key],
+                        'price' => $request->product_price[$key],
+                        'quantity' => $request->quantity[$key],
+                        'total_price' => $request->product_price[$key] * $request->quantity[$key],
+                    ]);
+                }
+            }
+
+            DB::commit();
+            return redirect()->route('order.thankyou', $order->id);
+            return view('frontend.thankyou', compact('order'));
+        } catch (\Exception $e) {
+            DB::rollBack();
+            // Handle the error appropriately
+            return redirect()->back()->withErrors('Error processing your order: ' . $e->getMessage());
+        }
+    }
+
+    public function thankyou($orderId)
+    {
+        $order = Order::findOrFail($orderId);
+        return view('frontend.thankyou',compact('order'));
+    }
+
+    public function trackOrder(Request $request)
+    {
+        $title = 'Track Order';
+        if($request->filled('tracking_number'))
+        {
+            $order = Order::where('order_number',$request->tracking_number)->first();
+        }
+        else
+        {
+            $order = new Order;
+        }
+
+        return view('frontend.orderTrack',compact('title','order'));
+    }
+
+    public function myOrders()
+    {
+        return view('frontend.myorders');
+    }
+
 
 }

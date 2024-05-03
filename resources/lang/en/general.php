@@ -73,5 +73,15 @@ return
     'contact-us' => 'Contact Us',
     'slides' => 'Slides',
     'information' => 'Information',
+    'country' => 'Country',
+    'state' => 'State',
+    'city' => 'City',
+    'zipcode' => 'Zip Code',
+    'address' => 'Address',
+    'order_notes' => 'Order Notes',
+    'product' => 'Product',
+    'subtotal' => 'Subtotal',
+    'place_order' => 'Place Order',
+    'billing_details' => 'Billing Details'
 ];
 ?>

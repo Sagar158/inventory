@@ -6,10 +6,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Agrul - Organic Farm Agriculture Template">
+    <meta name="description" content="Inventory">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- ========== Page Title ========== -->
-    <title>Agrul - Organic Farm Agriculture Template</title>
+    <title>Inventory</title>
 
     <!-- ========== Favicon Icon ========== -->
     <link rel="shortcut icon" href="{{ asset('frontend/assets/img/favicon.png') }}" type="image/x-icon">
@@ -31,7 +31,49 @@
     <link href="{{ asset('frontend/style.css')}}" rel="stylesheet">
     <!-- ========== End Stylesheet ========== -->
     @stack('css')
+    <style>
+        .attr-nav>ul>li>a i {
+            font-size: 38px !important;
+        }
+        .elementor img {
+            height: auto;
+            max-width: 100%;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+        }
 
+        nav.navbar.navbar-default.validnavs li.dropdown .dropdown-menu.cart-list .mini-cart-item-list .woocommerce-mini-cart-item .thumb .photo {
+            height: 60px;
+            width: 60px;
+            background: var(--bg-gray);
+            padding: 3px !important;
+            display: flex;
+            align-items: center;
+        }
+        nav.navbar.navbar-default.validnavs li.dropdown .dropdown-menu.cart-list .mini-cart-item-list .woocommerce-mini-cart-item a {
+            padding: 0 !important;
+            margin: 0;
+            border: none;
+            font-size: 16px;
+        }
+        nav.navbar.navbar-default.validnavs li.dropdown .dropdown-menu.cart-list .mini-cart-item-list .woocommerce-mini-cart-item .thumb a.remove
+        {
+            position: absolute;
+            right: -6px;
+            top: -5px;
+            left: auto;
+            height: 17px;
+            width: 17px;
+            background: #fd6363 !important;
+            color: var(--white);
+            line-height: 17px;
+            text-align: center;
+            font-size: 12px;
+            border-radius: 50%;
+        }
+
+    </style>
 </head>
 <body>
     <div class="se-pre-con"></div>
@@ -59,5 +101,52 @@
     <script src="{{ asset('frontend/assets/js/validnavs.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/main.js') }}"></script>
     @stack('scripts')
+    <script>
+        function countCart()
+        {
+            var cart = JSON.parse(localStorage.getItem('cart')) || {};
+            var numberOfItems = Object.keys(cart).length;
+            $('#lblCartCount').html(numberOfItems);
+
+            if(numberOfItems > 0)
+            {
+                var items = localStorage.getItem('cart');
+                var cartObject = JSON.parse(items);
+                var html = '';
+                var totalAmount = 0;
+                var productIds = [];
+                Object.entries(cartObject).forEach(([key, value]) => {
+                    productIds.push(key);
+                    html += '<div class="woocommerce-mini-cart-item mini_cart_item">';
+                    html += '<div class="info">';
+                    html += '<span class="text-left">'+value.productName+'</span> <span class="text-right">'+value.quantity+'x - <span class="price"><span class="woocommerce-Price-amount amount"><bdi style="font-size:14px;">MAD '+value.productPrice+'</bdi></span></span></span>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '<hr>';
+                    productPrice = parseInt(value.productPrice) * parseInt(value.quantity);
+                    totalAmount += parseInt(productPrice);
+                });
+
+                html += '<hr>';
+                html += '<div class="total">';
+                html += '<span class="mb-2">Sub Total:  <strong><span class="woocommerce-Price-amount amount">MAD '+totalAmount+'</span></strong></span>';
+                html += '<hr>';
+                html += '<a href="{{ route("viewCart") }}" class="btn secondary btn-theme btn-sm animation text-white text-center">View Cart</a>';
+                html += '<a href="{{ route("checkout") }}" class="btn secondary btn-theme btn-sm animation text-white text-center mt-2">Checkout</a>';
+                html += '</div>';
+
+                $('.cart').html(html);
+            }
+            else{
+
+                $('.cart').html('No Product in Cart');
+            }
+
+        }
+
+        $(document).ready(function(){
+            countCart();
+        })
+    </script>
 </body>
 </html>

@@ -91,12 +91,12 @@
             </a>
         </li>
 
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a href="{{ route('slider.index') }}" class="nav-link">
                 <i class="link-icon" data-feather="sliders"></i>
                 <span class="link-title">{{ trans('general.slides') }}</span>
             </a>
-        </li>
+        </li> --}}
 
         <li class="nav-item">
             <a href="{{ route('contact-us.information') }}" class="nav-link">
