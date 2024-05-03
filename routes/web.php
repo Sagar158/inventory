@@ -150,6 +150,13 @@ Route::middleware(['auth', 'locale'])->group(function () {
         Route::post('information/update/{id}', 'update')->name('information.update');
     });
 
+    Route::name('sales.')->prefix('sales')->controller(SalesController::class)->group(function(){
+        Route::get('/', 'index')->name('index');
+        Route::get('getSalesData','getSalesData')->name('getSalesData');
+        Route::get('show/{id}','show')->name('show');
+    });
+
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

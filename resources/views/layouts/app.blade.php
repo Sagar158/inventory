@@ -55,6 +55,7 @@
     <script src="{{ asset('assets/js/sweetalert.js') }}"></script>
     <script src="{{ asset('assets/vendors/dropify/dist/dropify.min.js') }}"></script>
 	<script src="{{ asset('assets/js/dropify.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @stack('scripts')
 
     <script>
