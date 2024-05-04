@@ -28,9 +28,18 @@ class Order extends Model
     const ORDER_PLACED = 'order_placed';
     const PACKING = 'packing';
     const COMPLETED = 'completed';
-    const CANCELLED = 'delivered';
+    const CANCELLED = 'cancelled';
     const DELIVERED = 'delivered';
+    const RETURNED = 'returned';
 
+    public const STATUS = [
+        self::ORDER_PLACED =>  'Order Initiated',
+        self::PACKING => 'InProgress',
+        self::COMPLETED =>   'Completed',
+        self::CANCELLED =>  'Cancelled',
+        self::DELIVERED =>  'Delivered',
+        self::RETURNED =>  'Returned',
+    ];
 
     public CONST LABELS = [
         self::ORDER_PLACED => ['label' => 'Order Initiated', 'badge' => 'badge-warning'],
@@ -38,6 +47,7 @@ class Order extends Model
         self::COMPLETED => ['label' => 'Order has been Completed', 'badge' => 'badge-success'],
         self::DELIVERED => ['label' => 'Order has been delivered', 'badge' => 'badge-info'],
         self::CANCELLED => ['label' => 'Order has been cancelled', 'badge' => 'badge-danger'],
+        self::RETURNED => ['label' => 'Order has been returned', 'badge' => 'badge-danger'],
     ];
 
     protected static function booted()
@@ -49,5 +59,21 @@ class Order extends Model
             }
         });
     }
+
+    public function country()
+    {
+        return $this->hasOne(Countries::class,'id','country_id');
+    }
+
+    public function orderDetails()
+    {
+        return $this->hasMany(OrderDetails::class,'order_id','id');
+    }
+
+    public function assignedTo()
+    {
+        return $this->hasOne(User::class,'id','assigned_to');
+    }
+
 
 }

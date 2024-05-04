@@ -153,7 +153,11 @@ Route::middleware(['auth', 'locale'])->group(function () {
     Route::name('sales.')->prefix('sales')->controller(SalesController::class)->group(function(){
         Route::get('/', 'index')->name('index');
         Route::get('getSalesData','getSalesData')->name('getSalesData');
-        Route::get('show/{id}','show')->name('show');
+        Route::get('details/{id}/show/','show')->name('show');
+        Route::post('change/status', 'changeStatus')->name('change.status');
+        Route::post('assigned/employee','assignedToEmployee')->name('assignedToEmployee');
+        Route::get('{orderId}/receipt','downloadReceipt')->name('downloadReceipt');
+
     });
 
 

@@ -37,12 +37,12 @@ class Helper
         return UserType::select('id','name')->pluck('name','id')->toArray();
     }
 
-    public static function fetchPatients()
+    public static function fetchEmployees()
     {
-        $users = User::where('user_type_id', 3)->get(['id', 'first_name', 'last_name']);
+        $users = User::where('user_type_id', 2)->get(['id', 'first_name', 'last_name']);
 
         $patients = $users->mapWithKeys(function ($user) {
-            return [$user->id => $user->fullname .'(P-'.$user->id.')'];
+            return [$user->id => $user->fullname .'(E-'.$user->id.')'];
         });
         return $patients->toArray();
     }

@@ -114,6 +114,10 @@ class HomeController extends Controller
                         'quantity' => $request->quantity[$key],
                         'total_price' => $request->product_price[$key] * $request->quantity[$key],
                     ]);
+
+                    $product = Products::findOrFail($request->product_id[$key]);
+                    $product->quantity -= $request->quantity[$key];
+                    $product->save();
                 }
             }
 

@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('phone');
             $table->longText('order_notes')->nullable();
             $table->double('amount');
-            $table->enum('status',['order_placed','packing','completed','delivered','cancelled'])->default('order_placed');
+            $table->enum('status',['order_placed','packing','completed','delivered','cancelled','returned'])->default('order_placed');
             $table->timestamps();
         });
     }

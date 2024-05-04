@@ -17,4 +17,10 @@ class OrderDetails extends Model
         'total_price'
     ];
 
+
+    public function product()
+    {
+        return $this->hasOne(Products::class,'id','product_id');
+    }
+
 }

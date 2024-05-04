@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Dompdf\Dompdf;
 use App\Models\Order;
 use App\Models\Sales;
+use App\Models\Products;
+use App\Models\OrderDetails;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\View;
 
 class SalesController extends Controller
 {
@@ -20,79 +24,57 @@ class SalesController extends Controller
         return view('sales.index', compact('title'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function show($salesId)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Sales $sales)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Sales $sales)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Sales $sales)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Sales $sales)
-    {
-        //
-    }
-
-    public function getSalesData(){
+        $title = $this->title;
         $this->authorize('viewAny',Order::class);
-        $query = Order::with(['supplier','category']);
+        $sales = Order::with(['orderDetails','assignedTo'])->findOrFail($salesId);
+
+        return view('sales.show', compact('title','sales'));
+
+    }
+
+    public function destroy($salesId)
+    {
+        $this->authorize('delete',Order::class);
+        $record = Order::destroy($salesId);
+        return response()->json(['success' => $record]);
+    }
+
+    public function getSalesData(Request $request)
+    {
+        $this->authorize('viewAny',Order::class);
+        $query = Order::with(['country']);
+
+        if($request->filled('assigned_to'))
+        {
+            $query = $query->where('assigned_to',$request->assigned_to);
+        }
+        if($request->filled('status'))
+        {
+            $query = $query->where('status',$request->status);
+        }
 
         return DataTables::of($query)
-            ->editColumn('status',function($product){
-                return ucfirst($product->status);
+            ->editColumn('status',function($order){
+                return Order::STATUS[$order->status];
             })
-            ->editColumn('price',function($product){
-                return Products::$currency.''.$product->price;
+            ->addColumn('person_name', function($order){
+                return $order->first_name.' '. $order->last_name;
             })
-            ->addColumn('supplier',function($product){
-                return $product->supplier->name;
+            ->addColumn('country', function($order){
+                return $order->country->name;
             })
-            ->addColumn('category',function($product){
-                return $product->category->name;
+            ->addColumn('assigned_to', function($order){
+                return isset($order->assignedTo->full_name) ? $order->assignedTo->full_name : '-';
             })
-            ->addColumn('action', function ($product) {
+            ->addColumn('action', function ($order) {
                 return '
                             <div class="btn-group" role="group">
                                 <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
                                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
-                                <a class="dropdown-item" href="'.route('products.show', $product->id).'">'.trans('general.show').'</a>
-                                <a class="dropdown-item" href="'.route('products.edit', $product->id).'">'.trans('general.edit').'</a>
-                                    <a class="dropdown-item delete-record" href="#" data-route="'.route('products.destroy', $product->id).'" data-id="'.$product->id.'">'.trans('general.delete').'</a>
+                                    <a class="dropdown-item" href="'.route('sales.show', $order->id).'">'.trans('general.show').'</a>
+                                    <a class="dropdown-item delete-record" href="#" data-route="'.route('sales.destroy', $order->id).'" data-id="'.$order->id.'">'.trans('general.delete').'</a>
                                 </div>
                             </div>
                         ';
@@ -100,4 +82,76 @@ class SalesController extends Controller
             ->rawColumns(['action','price'])
             ->make(true);
     }
+
+    public function assignedToEmployee(Request $request)
+    {
+        $orderId = $request->orderId;
+        $employeeId = $request->employeeId;
+
+        Order::where('id', $orderId)->update([
+            'assigned_to' => $employeeId
+        ]);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Order has been assigned to employee'
+        ]);
+    }
+
+    public function changeStatus(Request $request){
+        $orderId = $request->orderId;
+        $status = $request->status;
+
+        $order = Order::findOrFail($orderId);
+        $order->status = $status;
+        $order->save();
+
+        if($status == Order::CANCELLED)
+        {
+            $this->returnProducts($order->id);
+        }
+
+        return response()->json([
+         'status' => true,
+         'message' => 'Status changed successfully'
+        ]);
+    }
+
+    public function downloadReceipt($orderId)
+    {
+
+        $sales = Order::with(['orderDetails'])->findOrFail($orderId);
+
+        $data = [
+            'sales' => $sales,
+        ];
+
+        $html = View::make('sales.receipt', $data)->render();
+
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($html);
+
+        $dompdf->setPaper('A4', 'portrait');
+
+        $dompdf->render();
+
+        return $dompdf->stream($sales->order_number.'-'.time().'.pdf');
+    }
+
+    public function returnProducts($orderId)
+    {
+        $orderDetails = OrderDetails::where('order_id', $orderId)->get();
+        if(!empty($orderDetails))
+        {
+            foreach($orderDetails as $detail)
+            {
+                $product = Products::findOrFail($detail->product_id);
+                $product->quantity += $detail->quantity;
+                $product->save();
+            }
+        }
+
+    }
+
+
 }
