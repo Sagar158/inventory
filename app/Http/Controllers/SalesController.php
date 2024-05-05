@@ -6,9 +6,11 @@ use Dompdf\Dompdf;
 use App\Models\Order;
 use App\Models\Sales;
 use App\Models\Products;
+use App\Models\Countries;
 use App\Models\OrderDetails;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 
 class SalesController extends Controller
@@ -19,9 +21,80 @@ class SalesController extends Controller
     public $title = "Sales";
     public function index()
     {
-        $title = $this->title;
         $this->authorize('viewAny',Order::class);
+        $title = $this->title;
         return view('sales.index', compact('title'));
+    }
+
+    public function create()
+    {
+        $countries = Countries::select('id','name')->pluck('name','id')->toArray();
+        $title = $this->title;
+        return view('sales.edit', compact('title','countries'));
+    }
+
+    public function store(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            $validatedData = $request->validate([
+                'first_name'        => 'required|string|max:255',
+                'last_name'         => 'required|string|max:255',
+                'email'             => 'required|email|max:255',
+                'phone'             => 'required|numeric',
+                'country_id'        => 'required|integer',
+                'state'             => 'required|string|max:255',
+                'city'              => 'required|string|max:255',
+                'zip_code'          => 'required|string|max:255',
+                'address'           => 'required|string|max:1024',
+                'order_notes'       => 'nullable|string|max:1024',
+                'product_id.*'      => 'required|integer|exists:products,id',
+                'price.*'   => 'required|numeric',
+                'quantity.*'        => 'required|integer|min:1'
+            ]);
+
+            $order = new Order;
+            $order->first_name = $validatedData['first_name'];
+            $order->last_name = $validatedData['last_name'];
+            $order->email = $validatedData['email'];
+            $order->phone = $validatedData['phone'];
+            $order->country_id = $validatedData['country_id'];
+            $order->state = $validatedData['state'];
+            $order->city = $validatedData['city'];
+            $order->zip_code = $validatedData['zip_code'];
+            $order->street_address = $validatedData['address'];
+            $order->status = Order::ORDER_PLACED;
+            $order->order_notes = $validatedData['order_notes'];
+            $order->amount = array_sum($request['total_price']);
+            $order->save();
+
+            if (!empty($request->product_id))
+            {
+                foreach ($request->product_id as $key => $productId)
+                {
+                    OrderDetails::create([
+                        'order_id' => $order->id,
+                        'product_id' => $request->product_id[$key],
+                        'price' => $request->price[$key],
+                        'quantity' => $request->quantity[$key],
+                        'total_price' => $request->total_price[$key],
+                    ]);
+
+                    $product = Products::findOrFail($request->product_id[$key]);
+                    $product->quantity -= $request->quantity[$key];
+                    $product->save();
+                }
+            }
+
+            DB::commit();
+            return redirect()->route('sales.index')->with('success','Order has been created successfully');
+        }
+        catch (\Exception $e)
+        {
+            DB::rollBack();
+            return redirect()->back()->withErrors('Error processing your order: ' . $e->getMessage());
+        }
     }
 
     public function show($salesId)
@@ -153,5 +226,13 @@ class SalesController extends Controller
 
     }
 
+    public function fetchProductAmount(Request $request)
+    {
+        $productId = $request->productId;
+        $product = Products::findOrFail($productId);
 
+        return response()->json([
+            'price' => $product->price
+        ]);
+    }
 }

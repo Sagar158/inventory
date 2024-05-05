@@ -36,8 +36,8 @@
                 <div class="col-lg-4 col-sm-12 col-md-4 mt-4">
                     <x-text-input id="address" type="text" name="address" :value="old('address')" required autofocus autocomplete="off" placeholder="{{ trans('general.address') }}" />
                 </div>
-                <div class="col-lg-8 col-sm-12 col-md-8 mt-4">
-                    <x-text-input id="order_notes" type="text" name="order_notes" :value="old('order_notes')" required autofocus autocomplete="off" placeholder="{{ trans('general.order_notes') }}" />
+                <div class="col-lg-12 col-sm-12 col-md-12 mt-4">
+                    <x-text-area id="order_notes" type="text" name="order_notes" :value="old('order_notes')" required autofocus autocomplete="off" placeholder="{{ trans('general.special_instructions') }}" />
                 </div>
 
                 <div class="col-lg-8 col-sm-12 col-md-8 mt-4">

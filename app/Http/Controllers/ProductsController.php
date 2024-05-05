@@ -191,4 +191,15 @@ class ProductsController extends Controller
             ->make(true);
     }
 
+    public function fetchData(Request $request)
+    {
+        $products = Products::select('id','product_name as name');
+        if($request->filled('search')){
+            $products = $products->where('product_name', 'LIKE','%'.$request->search.'%');
+        }
+        $products = $products->get();
+
+        return response()->json(['data' => $products]);
+    }
+
 }

@@ -1,7 +1,7 @@
 <x-app-layout title="{{ $title }}">
     <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
         <x-page-heading title="{{ trans('general.suppliers') }}"></x-page-heading>
-        <x-right-side-button link="{{ route('suppliers.create') }}" title="Create"></x-right-side-button>
+        {{-- <x-right-side-button link="{{ route('suppliers.create') }}" title="Create"></x-right-side-button> --}}
         <x-alert></x-alert>
         <div class="container-fluid card mt-3">
             <div class="row card-body">

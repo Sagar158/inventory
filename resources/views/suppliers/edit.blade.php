@@ -1,5 +1,6 @@
 @php
-    $route = (!isset($supplier->id) ? route('suppliers.store') : route('suppliers.update',$supplier->id));
+    $route = '';
+// $route = (!isset($supplier->id) ? route('suppliers.store') : route('suppliers.update',$supplier->id));
 @endphp
 <x-app-layout title="{{ $title }}">
     <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">

@@ -81,7 +81,8 @@ return [
     'subtotal' => 'Total',
     'place_order' => 'Passer la commande',
     'billing_details' => 'Détails de la facturation',
-];
+    'special_instructions' => 'Instructions spéciales'
+ ];
 
 
 ?>

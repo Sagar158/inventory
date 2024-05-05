@@ -76,6 +76,7 @@ Route::middleware(['auth', 'locale'])->group(function () {
         Route::post('/delete/{id}', 'destroy')->name('destroy');
         Route::get('data','getProductData')->name('getProductData');
         Route::post('change/status/{parameterId}','changeStatus')->name('changeStatus');
+        Route::get('fetchData','fetchData')->name('fetchData');
     });
 
     Route::name('suppliers.')->prefix('suppliers')->controller(SupplierController::class)->group(function(){
@@ -113,6 +114,7 @@ Route::middleware(['auth', 'locale'])->group(function () {
         Route::post('/delete/{id}', 'destroy')->name('destroy');
         Route::get('data','getProductData')->name('getProductData');
         Route::post('change/status/{parameterId}','changeStatus')->name('changeStatus');
+        Route::get('fetchProductAmount','fetchProductAmount')->name('fetchProductAmount');
     });
 
     Route::name('language.')->prefix('language')->controller(LanguageController::class)->group(function(){
@@ -152,6 +154,7 @@ Route::middleware(['auth', 'locale'])->group(function () {
 
     Route::name('sales.')->prefix('sales')->controller(SalesController::class)->group(function(){
         Route::get('/', 'index')->name('index');
+        Route::get('create', 'create')->name('create');
         Route::get('getSalesData','getSalesData')->name('getSalesData');
         Route::get('details/{id}/show/','show')->name('show');
         Route::post('change/status', 'changeStatus')->name('change.status');

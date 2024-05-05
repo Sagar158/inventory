@@ -82,6 +82,7 @@ return
     'product' => 'Product',
     'subtotal' => 'Subtotal',
     'place_order' => 'Place Order',
-    'billing_details' => 'Billing Details'
+    'billing_details' => 'Billing Details',
+    'special_instructions' => 'Special Instructions',
 ];
 ?>
