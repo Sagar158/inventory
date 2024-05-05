@@ -117,7 +117,7 @@ class SalesController extends Controller
     public function getSalesData(Request $request)
     {
         $this->authorize('viewAny',Order::class);
-        $query = Order::with(['country']);
+        $query = Order::with(['country'])->orderBy('id', 'desc');
 
         if($request->filled('assigned_to'))
         {
