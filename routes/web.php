@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\NotificationController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\ThemeController;
@@ -116,6 +117,12 @@ Route::middleware(['auth', 'locale'])->group(function () {
         Route::post('change/status/{parameterId}','changeStatus')->name('changeStatus');
         Route::get('fetchProductAmount','fetchProductAmount')->name('fetchProductAmount');
     });
+
+    Route::name('notification.')->prefix('notifications')->controller(NotificationController::class)->group(function(){
+        Route::get('markAllNotificationsAsRead','markAllNotificationsAsRead')->name('clear');
+        Route::get('viewNotification','viewNotification')->name('view');
+    });
+
 
     Route::name('language.')->prefix('language')->controller(LanguageController::class)->group(function(){
         Route::get('/','index')->name('index');

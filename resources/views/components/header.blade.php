@@ -18,6 +18,36 @@
                     <a href="{{ route('change_language',['lang' => 'fr']) }}" class="dropdown-item py-2"><i class="flag-icon flag-icon-fr" title="fr" id="fr"></i> <span class="ml-1"> French </span></a>
                 </div>
             </li>
+            <li class="nav-item dropdown nav-notifications">
+                <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i data-feather="bell"></i>
+                    <div class="indicator">
+                        <div class="circle"></div>
+                    </div>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="notificationDropdown">
+                    <div class="dropdown-header d-flex align-items-center justify-content-between">
+                        <p class="mb-0 font-weight-medium">{{ auth()->user()->unreadNotifications()->count() }} New Notifications</p>
+                        <a href="{{ route('notification.clear') }}" class="text-muted">Clear all</a>
+                    </div>
+                    <div class="dropdown-body">
+                        @foreach (auth()->user()->notifications as $notification)
+                            <a href="{{ $notification->data['link'] }}" class="dropdown-item">
+                                <div class="icon">
+                                    <i data-feather="user-plus"></i>
+                                </div>
+                                <div class="content">
+                                    <p>{{ $notification->data['message'] }}</p>
+                                    <p class="sub-text text-muted">{{ $notification->created_at->diffForHumans() }}</p>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                    <div class="dropdown-footer d-flex align-items-center justify-content-center">
+                        <a href="{{ route('notification.view') }}">View all</a>
+                    </div>
+                </div>
+            </li>
             <li class="nav-item dropdown nav-profile">
                 <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img src="{{ asset('/assets/images/logo.jpg') }}" style="width:30px;" alt="">

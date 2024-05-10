@@ -43,14 +43,19 @@
                                         @endif
                                         <div class="mt-1 text-danger">Special Instructions : {{ $sales->order_notes }}</div>
                                     </div>
-                                    @if($sales->status != \App\Models\Order::CANCELLED)
+                                    <input type="hidden" value="{{ $sales->id }}" name="order_id">
+                                    @if($sales->status != \App\Models\Order::CANCELLED && (auth()->user()->user_type_id == \App\Models\User::ADMIN))
                                         <div class="col-lg-2 col-sm-12 col-md-2">
                                             <x-select-box id="assigned_to" name="assigned_to" value="{{ old('assigned_to', $sales->assigned_to) }}" :values="\App\Helpers\Helper::fetchEmployees()" autocomplete="off" placeholder="Assigned To" required/>
                                         </div>
                                         <div class="col-lg-2 col-sm-12 col-md-2">
-                                            <input type="hidden" value="{{ $sales->id }}" name="order_id">
                                             <x-select-box id="status" name="status" value="{{ old('status', $sales->status) }}" :values="\App\Models\Order::STATUS" autocomplete="off" placeholder="Status" required/>
                                         </div>
+                                    @elseif($sales->status == \App\Models\Order::PACKING && $sales->assigned_to == auth()->user()->id)
+                                    <div class="col-lg-2 col-sm-12 col-md-2 text-center">
+                                        <input type="checkbox" name="mark_as_complete" class="form-control">
+                                        <div class="mt-2">Mark as complete</div>
+                                    </div>
                                     @endif
                                     <div class="col-lg-2 col-sm-12 col-md-2">
                                         <a class="btn btn-primary mt-4" target="_blank" href="{{ route('sales.downloadReceipt', $sales->id) }}">
@@ -231,6 +236,49 @@
             });
 
 
+        });
+
+        $(document).ready(function() {
+            $(document).on('click','input[name="mark_as_complete"]',function() {
+                var isChecked = $(this).is(':checked');
+                var orderId = $('input[name="order_id"]').val();
+
+                if(isChecked)
+                {
+                    $.ajax({
+                        url : '{{ route("sales.assignedToEmployee") }}',
+                        method : 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data : {
+                            orderId : orderId
+                        },
+                        success : function(data) {
+                            if(data.status)
+                            {
+                                Swal.fire({
+                                        title: "Success!",
+                                        text: data.message,
+                                        icon: "success"
+                                    });
+
+                                location.reload();
+                            }
+                            else
+                            {
+                                Swal.fire({
+                                        title: "OOPS!",
+                                        text: "Something went wrong",
+                                        icon: "error"
+                                    });
+
+                            }
+                        }
+                    });
+                }
+
+            });
         });
     </script>
 @endpush

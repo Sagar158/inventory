@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Dompdf\Dompdf;
+use App\Models\User;
 use App\Models\Order;
 use App\Models\Sales;
 use App\Models\Products;
@@ -12,6 +13,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
+use App\Notifications\AssignToEmployee;
 
 class SalesController extends Controller
 {
@@ -164,6 +166,12 @@ class SalesController extends Controller
         Order::where('id', $orderId)->update([
             'assigned_to' => $employeeId
         ]);
+
+        $user = User::findOrFail($employeeId);
+        $order = Order::findOrFail($orderId);
+        $link = route('sales.show', $orderId);
+        $notificationMessage = $order->order_number.' has been assigned to you, Please check the details and take action accordingly.';
+        $user->notify(new AssignToEmployee($link, $notificationMessage));
 
         return response()->json([
             'status' => true,
