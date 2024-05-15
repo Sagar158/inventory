@@ -34,7 +34,7 @@
             <div class="col-xl-6 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="card-title">{{ trans('general.product_supplier_wise') }}</h6>
+                        <h6 class="card-title">{{ trans('general.top_product_supplier_wise') }}</h6>
                         <div id="productWiseSupplier"></div>
                     </div>
                 </div>
@@ -49,7 +49,9 @@
                 lineChart('quarterlyProdutSales');
                 barChart('yearlySales');
                 donutChart('productWiseChart');
-                pieChart('productWiseSupplier');
+                var data = @json($data);
+
+                pieChart('productWiseSupplier', data);
             });
 
             function lineChart(chartId)
@@ -149,7 +151,8 @@
                 apexBarChart.render();
             }
 
-            function donutChart(chartId){
+            function donutChart(chartId)
+            {
                 var options = {
                                 chart: {
                                 height: 300,
@@ -174,27 +177,34 @@
                 chart.render();
             }
 
-            function pieChart(chartId)
+            function pieChart(chartId, data)
             {
-                // Apex Pie chart end
+                var supplierNames = data.map(function(item) {
+                    return item.supplier_name;
+                });
+
+                var productCounts = data.map(function(item) {
+                    return item.product_count;
+                });
+                console.log(supplierNames);
+
                 var options = {
                     chart: {
-                    height: 300,
-                    type: "pie"
+                        height: 300,
+                        type: "pie"
                     },
-                    colors: ["#f77eb9", "#7ee5e5","#4d8af0","#fbbc06"],
+                    colors: ["#f77eb9", "#7ee5e5","#4d8af0","#fbbc06", "#d3272f"],
                     legend: {
-                    position: 'top',
-                    horizontalAlign: 'center'
+                        position: 'top',
+                        horizontalAlign: 'center'
                     },
                     stroke: {
-                    colors: ['rgba(0,0,0,0)']
+                        colors: ['rgba(0,0,0,0)']
                     },
-                    dataLabels: {
-                    enabled: false
-                    },
-                    series: [44, 55, 13, 33]
+                    series: productCounts,
+                    labels: supplierNames
                 };
+
 
                 var chart = new ApexCharts(document.querySelector("#"+chartId), options);
 

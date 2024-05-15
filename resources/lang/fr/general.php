@@ -143,6 +143,7 @@ return [
     'remove_item' => 'Retirer l\'objet',
     'checkout' => 'Vérifier',
     'select_language' => 'Changer de langue',
+    'top_product_supplier_wise' => 'Les 5 principaux fournisseurs de produits'
  ];
 
 

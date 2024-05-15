@@ -146,5 +146,6 @@ return
     'remove_item' => 'Remove item',
     'checkout' => 'Checkout',
     'select_language' => 'Change Language',
+    'top_product_supplier_wise' => 'Top 5 Product Suppliers'
 ];
 ?>
