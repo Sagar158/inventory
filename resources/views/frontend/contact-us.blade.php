@@ -6,15 +6,8 @@
         <div class="contact-area default-padding" style="background-image: url({{ asset('frontend/assets/img/shape/28.png') }});">
             <div class="container">
                 <div class="row align-center">
-                    <h1 class="font-weight-bold"><b>Contact Us</b></h1>
+                    <h1 class="font-weight-bold"><b>{{ trans('general.contact-us') }}</b></h1>
                     @include('frontend.contact-us-form')
-                </div>
-                <div class="row align-center mt-4">
-                    <div class="col-lg-12 col-sm-12 col-md-12">
-                        <h1 class="font-weight-bold"><b>Our Factory</b></h1>
-                        <p class="mb-4">Old National Highway near MDS mart therhi (Habibabad) Dist. Khairpur, Sindh, Pakistan.</p>
-                        <div id='map' style='height: 500px;'></div>
-                    </div>
                 </div>
             </div>
         </div>

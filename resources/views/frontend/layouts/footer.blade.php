@@ -6,16 +6,16 @@
                 <!-- Single Itme -->
                 <div class="col-lg-3 col-md-12 item">
                     <div class="footer-item link">
-                        <h4 class="widget-title">Explore</h4>
+                        <h4 class="widget-title">{{ trans('general.explore') }}</h4>
                         <ul>
                             <li>
-                                <a href="{{ route('home') }}">Home</a>
+                                <a href="{{ route('home') }}">{{ trans('general.home') }}</a>
                             </li>
                             <li>
-                                <a href="{{ route('product') }}">Products</a>
+                                <a href="{{ route('product') }}">{{ trans('general.all_products') }}</a>
                             </li>
                             <li>
-                                <a href="{{ route('contactus') }}">Contact Us</a>
+                                <a href="{{ route('contactus') }}">{{ trans('general.contact-us') }}</a>
                             </li>
                         </ul>
                     </div>
@@ -23,14 +23,14 @@
                 <!-- Single Itme -->
                 <div class="col-lg-3 col-md-12 item">
                     <div class="footer-item contact">
-                        <h4 class="widget-title">Contact Info</h4>
+                        <h4 class="widget-title">{{ trans('general.contact-info') }}</h4>
                         <ul>
                             <li>
                                 <div class="icon">
                                     <i class="fas fa-home"></i>
                                 </div>
                                 <div class="content">
-                                    {{-- <strong>Address:</strong> {{ \App\Helpers\Helper::information()->location }} --}}
+                                    <strong>Address:</strong> {{ isset(\App\Helpers\Helper::information()->location) ? \App\Helpers\Helper::information()->location : '' }}
                                 </div>
                             </li>
                             <li>
@@ -38,8 +38,10 @@
                                     <i class="fas fa-envelope"></i>
                                 </div>
                                 <div class="content">
-                                    <strong>Email:</strong>
-                                    {{-- <a href="mailto:{{ \App\Helpers\Helper::information()->email }}">{{ \App\Helpers\Helper::information()->email }}</a> --}}
+                                    <strong>{{ trans('general.email') }}:</strong>
+                                    @if(isset(\App\Helpers\Helper::information()->email))
+                                        <a href="mailto:{{ \App\Helpers\Helper::information()->email }}">{{ \App\Helpers\Helper::information()->email }}</a>
+                                    @endif
                                 </div>
                             </li>
                             <li>
@@ -47,8 +49,10 @@
                                     <i class="fas fa-phone"></i>
                                 </div>
                                 <div class="content">
-                                    <strong>Phone:</strong>
-                                    {{-- <a href="tel:{{ \App\Helpers\Helper::information()->phone }}">{{ \App\Helpers\Helper::information()->phone }}</a> --}}
+                                    <strong>{{ trans('general.phone') }}:</strong>
+                                    @if(isset(\App\Helpers\Helper::information()->phone))
+                                        <a href="tel:{{ \App\Helpers\Helper::information()->phone }}">{{ \App\Helpers\Helper::information()->phone }}</a>
+                                    @endif
                                 </div>
                             </li>
                         </ul>
@@ -62,7 +66,7 @@
         <div class="footer-bottom">
             <div class="row">
                 <div class="col-lg-6">
-                    <p>&copy; Copyright 2024. All Rights Reserved by <a href="#">United Foods</a></p>
+                    <p>&copy; {{ trans('general.all_right_reserved_by') }} <a href="#">{{ trans('general.ims') }}</a></p>
                 </div>
                 <div class="col-lg-6 text-end">
                 </div>

@@ -6,11 +6,11 @@
             <div class="row">
 
                 <div class="col-lg-12 col-sm-12 col-md-12">
-                    <h3 class="font-weight-bold">My Orders</h3>
+                    <h3 class="font-weight-bold">{{ trans('general.my_orders') }}</h3>
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>Order Numbers</th>
+                                <th>{{trans('general.order_numbers')}}</th>
                             </tr>
                         </thead>
                         <tbody class="order-data">

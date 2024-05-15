@@ -9,7 +9,7 @@
                 <div class="col-lg-7">
                     <div class="content">
                         <!-- Tab Nav -->
-                        <h2><strong>Products</strong></h2>
+                        <h2><strong>{{ trans('general.products') }}</strong></h2>
                         <!-- End Tab Nav -->
                     </div>
                 </div>

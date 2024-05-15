@@ -52,16 +52,6 @@
                             <div class="product-tags">
                                 <a href="#">{{ $product->category->name }}</a>
                             </div>
-                            <div class="review-count">
-                                <div class="rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <span>(8 Review)</span>
-                            </div>
                         </div>
                         <h2 class="product-title">
                             {{ $product->product_name }}
@@ -79,15 +69,15 @@
                             <input type="number" name="quantity" min="0" value="1" step="1" size="5" name="quantity" placeholder="1">
                             <a href="javascript::void(0);" class="btn secondary btn-theme btn-sm animation addToCart">
                                 <i class="fas fa-shopping-cart"></i>
-                                Add to cart
+                                {{ trans('general.add_to_cart') }}
                             </a>
                         </div>
                         <div class="product-meta">
                             <span class="sku">
-                                <strong>Product Number:</strong> {{ $product->product_number }}
+                                <strong>{{ trans('general.product_number') }}:</strong> {{ $product->product_number }}
                             </span>
                             <span class="posted-in">
-                                <strong>Category:</strong>
+                                <strong>{{ trans('general.category') }}:</strong>
                                 <a href="#">{{ $product->category->name }}</a>
                             </span>
                         </div>
@@ -103,16 +93,13 @@
                     <!-- Tab Nav -->
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                         <button class="nav-link active" id="description-tab-control" data-bs-toggle="tab" data-bs-target="#description-tab" type="button" role="tab" aria-controls="description-tab" aria-selected="true">
-                            Description
+                            {{trans('general.description')}}
                         </button>
 
                         <button class="nav-link" id="information-tab-control" data-bs-toggle="tab" data-bs-target="#information-tab" type="button" role="tab" aria-controls="information-tab" aria-selected="false">
-                            Additional Information
+                            {{ trans('general.additional_information') }}
                         </button>
 
-                        <button class="nav-link" id="review-tab-control" data-bs-toggle="tab" data-bs-target="#review-tab" type="button" role="tab" aria-controls="review-tab" aria-selected="false">
-                            Review
-                        </button>
 
                     </div>
                     <!-- End Tab Nav -->
@@ -131,19 +118,19 @@
                                 <table class="table table-bordered">
                                     <tbody>
                                         <tr>
-                                            <td>Supplier</td>
+                                            <td>{{ trans('general.supplier') }}</td>
                                             <td>{{ $product->supplier->name }}</td>
                                         </tr>
                                         <tr>
-                                            <td>Category</td>
+                                            <td>{{ trans('general.category') }}</td>
                                             <td>{{ $product->category->name }}</td>
                                         </tr>
                                         <tr>
-                                            <td>Available Quantity</td>
+                                            <td>{{ trans('general.available_quantity') }}</td>
                                             <td>{{ $product->quantity }}</td>
                                         </tr>
                                         <tr>
-                                            <td>Price</td>
+                                            <td>{{ trans('general.price') }}</td>
                                             <td>MAD {{ $product->price }}</td>
                                         </tr>
                                     </tbody>
@@ -152,105 +139,6 @@
                         </div>
                         <!-- End Tab Single -->
 
-                        <!-- Tab Single -->
-                        <div class="tab-pane fade" id="review-tab" role="tabpanel" aria-labelledby="review-tab-control">
-                            <h4>1 review for “Fresh Red Seedless”</h4>
-                            <div class="review-items">
-                                <div class="item">
-                                    <div class="thumb">
-                                        <img src="assets/img/farmers/1.jpg" alt="Thumb">
-                                    </div>
-                                    <div class="info">
-                                        <div class="rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star-half-alt"></i>
-                                        </div>
-                                        <div class="review-date">April 8, 2021</div>
-                                        <div class="review-authro">
-                                            <h5>Aleesha Brown
-                                            </h5>
-                                        </div>
-                                        <p>
-                                            Highly recommended. Will purchase more in future.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="thumb">
-                                        <img src="assets/img/farmers/3.jpg" alt="Thumb">
-                                    </div>
-                                    <div class="info">
-                                        <div class="rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star-half-alt"></i>
-                                        </div>
-                                        <div class="review-date">April 8, 2021</div>
-                                        <div class="review-authro">
-                                            <h5>Sarah Albert</h5>
-                                        </div>
-                                        <p>
-                                            Great product quality!
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="review-form">
-                                <h4>Add a review</h4>
-                                <div class="rating-select">
-                                    <div class="stars">
-                                        <span>
-                                            <a class="star-1" href="#"><i class="fas fa-star"></i></a>
-                                            <a class="star-2" href="#"><i class="fas fa-star"></i></a>
-                                            <a class="star-3" href="#"><i class="fas fa-star"></i></a>
-                                            <a class="star-4" href="#"><i class="fas fa-star"></i></a>
-                                            <a class="star-5" href="#"><i class="fas fa-star"></i></a>
-                                        </span>
-                                    </div>
-                                </div>
-                                <form action="#" class="contact-form">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="form-group comments">
-                                                <textarea class="form-control" id="comments" name="comments" placeholder="Tell Us About Project *"></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input class="form-control" id="name" name="name" placeholder="Name" type="text">
-                                                <span class="alert-error"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input class="form-control" id="email" name="email" placeholder="Email*" type="email">
-                                                <span class="alert-error"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <button type="submit" name="submit" id="submit">
-                                                Post Review
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <!-- Alert Message -->
-                                    <div class="col-md-12 alert-notification">
-                                        <div id="message" class="alert-msg"></div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <!-- End Tab Single -->
 
                     </div>
                     <!-- End Tab Content -->

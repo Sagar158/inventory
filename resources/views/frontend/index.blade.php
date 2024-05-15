@@ -19,7 +19,7 @@
                                                 <img src="{{ isset($product->primaryImage->image) ? asset($product->primaryImage->image) : asset('assets/images/placeholder.jpg') }}" style="width:150px; height:150px;border-radius:50%;" alt="Image Not Found">
                                             </div>
                                             <h5><a href="{{ route('product') }}">{{ $product->name }}</a></h5>
-                                            <a href="{{ route('product') }}" class="btn btn-theme secondary btn-sm radius animation">View Details</a>
+                                            <a href="{{ route('product') }}" class="btn btn-theme secondary btn-sm radius animation">{{ trans('general.view_details') }}</a>
                                         </div>
                                     </div>
                                 @endforeach

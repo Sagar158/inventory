@@ -7,11 +7,11 @@
                 <x-alert></x-alert>
 
                 @if(isset($order->id))
-                    <h3 class="font-weight-bold">Congratulations! Your Order has been confirmed</h3>
-                    <h4>You can track your order by using this tracking number - <span class="font-weight-bold">{{ $order->order_number }}</span></h4>
-                    <h5><a class="font-weight-bold" href="{{ route('order.track',['tracking_number' => $order->order_number]) }}">Click me to track order</a></h5>
+                    <h3 class="font-weight-bold">{{ trans('general.order_confirmation') }}</h3>
+                    <h4>{{ trans('general.track_your_order') }}<span class="font-weight-bold">{{ $order->order_number }}</span></h4>
+                    <h5><a class="font-weight-bold" href="{{ route('order.track',['tracking_number' => $order->order_number]) }}">{{ trans('general.click_me_to_track_order') }}</a></h5>
                 @else
-                    <h1 class="font-weight-bold">No Order Found!</h1>
+                    <h1 class="font-weight-bold">{{ trans('general.no_order_found') }}</h1>
                 @endif
             </div>
         </div>

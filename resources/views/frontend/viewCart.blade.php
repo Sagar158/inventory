@@ -7,18 +7,18 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th class="product-remove"><span class="screen-reader-text">Remove item</span></th>
-                            <th class="product-name">Product</th>
-                            <th class="product-price">Price</th>
-                            <th class="product-quantity">Quantity</th>
-                            <th class="product-subtotal">Subtotal</th>
+                            <th class="product-remove"><span class="screen-reader-text">{{ trans('general.remove_item') }}</span></th>
+                            <th class="product-name">{{ trans('general.product') }}</th>
+                            <th class="product-price">{{ trans('general.price') }}</th>
+                            <th class="product-quantity">{{ trans('general.quantity') }}</th>
+                            <th class="product-subtotal">{{ trans('general.subtotal') }}</th>
                         </tr>
                     </thead>
                     <tbody class="cart-data">
 
                     </tbody>
                 </table>
-                <a href="{{ route("checkout") }}" class="btn secondary btn-theme btn-sm animation text-white text-center mt-2 checkout-button">Checkout</a>
+                <a href="{{ route("checkout") }}" class="btn secondary btn-theme btn-sm animation text-white text-center mt-2 checkout-button">{{ trans('general.checkout') }}</a>
             </div>
         </div>
     </div>

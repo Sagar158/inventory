@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <!-- ========== Meta Tags ========== -->
     <meta charset="utf-8">
@@ -9,7 +8,7 @@
     <meta name="description" content="Inventory">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- ========== Page Title ========== -->
-    <title>Inventory</title>
+    <title>{{ trans('general.inventory') }}</title>
 
     <!-- ========== Favicon Icon ========== -->
     <link rel="shortcut icon" href="{{ asset('frontend/assets/img/favicon.png') }}" type="image/x-icon">

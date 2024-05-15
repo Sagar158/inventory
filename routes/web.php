@@ -28,7 +28,7 @@ use App\Http\Controllers\Frontend\HomeController;
 |
 */
 
-Route::controller(HomeController::class)->group(function () {
+Route::controller(HomeController::class)->middleware(['locale'])->group(function () {
     Route::get('/','index')->name('home');
     Route::get('product','products')->name('product');
     Route::get('product/{productId}/detials','productDetails')->name('product.details');
@@ -182,7 +182,7 @@ Route::middleware(['auth', 'locale'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('theme/change/{theme}',[ThemeController::class,'changeTheme'])->name('theme.change');
-    Route::get('/change-language', [ThemeController::class, 'switchLanguage'])->name('change_language')->middleware('locale');
 });
 
+Route::get('/change-language', [ThemeController::class, 'switchLanguage'])->name('change_language')->middleware('locale');
 require __DIR__.'/auth.php';

@@ -6,7 +6,7 @@
                 <div class="col-lg-9">
                     <div class="flex-item left">
                         <p>
-                            We only sell 100% quality things.
+                            {{ trans('general.we_sell_100_quality_things') }}
                         </p>
                         <ul>
                             <li>
@@ -100,17 +100,28 @@
                         </button>
 
                         <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
-                            <li><a href="{{ route('home') }}">Home</a></li>
-                            <li><a href="{{ route('product') }}">All Products</a></li>
-                            <li><a href="{{ route('contactus') }}">Contact us</a></li>
-                            <li><a href="{{ route('my-orders') }}">My Orders</a></li>
+                            <li><a href="{{ route('home') }}">{{ trans('general.home') }}</a></li>
+                            <li><a href="{{ route('product') }}">{{ trans('general.all_products') }}</a></li>
+                            <li><a href="{{ route('contactus') }}">{{ trans('general.contact-us') }}</a></li>
+                            <li><a href="{{ route('my-orders') }}">{{ trans('general.my_orders') }}</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ trans('general.select_language') }}</a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="{{ route('change_language',['lang' => 'en']) }}" class="dropdown-item py-2"><i class="flag-icon flag-icon-us" title="us" id="us"></i> <span class="ml-1"> English </span></a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('change_language',['lang' => 'fr']) }}" class="dropdown-item py-2"><i class="flag-icon flag-icon-fr" title="fr" id="fr"></i> <span class="ml-1"> French </span></a>
+                                    </li>
+                                </ul>
+                            </li>
                             @if(Auth::check())
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Explore Admin</a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ trans('general.explore_admin') }}</a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="{{ route('dashboard') }}">Go To Dashboard</a></li>
+                                    <li><a href="{{ route('dashboard') }}">{{ trans('general.go_to_dashboard') }}</a></li>
                                     <li>
-                                        <a href="javascript:void(0);" class="logout-click">Logout</a>
+                                        <a href="javascript:void(0);" class="logout-click">{{ trans('general.logout') }}</a>
                                         <form action="{{ route('logout') }}" method="POST" id="logout-form">
                                             @csrf
                                         </form>
@@ -118,7 +129,7 @@
                                 </ul>
                             </li>
                             @else
-                                <li><a href="{{ route('login') }}">Login</a></li>
+                                <li><a href="{{ route('login') }}">{{ trans('general.login') }}</a></li>
                             @endif
                         </ul>
                     </div>
@@ -134,7 +145,7 @@
                                     <span class='badge badge-warning' id='lblCartCount'>0</span>
                                 </a>
                                 <ul class="dropdown-menu normalmenu" style="width: 28rem !important;">
-                                    <li class="p-2 cart theme-color">No product in cart</li>
+                                    <li class="p-2 cart theme-color">{{ trans('general.no_product_in_cart') }}</li>
                                 </ul>
                               </li>
                            </ul>
@@ -152,7 +163,7 @@
                                             <i class="fas fa-comments-alt-dollar"></i>
                                         </div>
                                         <div class="info">
-                                            <p>Have any Questions?</p>
+                                            <p>{{ trans('general.have_any_questions') }}</p>
                                             <h5><a href="mailto:{{ \App\Helpers\Helper::information()->email }}">{{ \App\Helpers\Helper::information()->email }}</a></h5>
                                         </div>
                                     </div>
