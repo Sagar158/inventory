@@ -18,16 +18,16 @@
         </style>
     @endpush
     <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
-        <x-page-heading title="{{ __('Sales Details') }}"></x-page-heading>
+        <x-page-heading title="{{ trans('general.sales_details') }}"></x-page-heading>
         <x-back-button></x-back-button>
-
+        <x-alert></x-alert>
         <div class="container-fluid mt-3">
             <div class="row">
                 <div class="col-lg-12 col-sm-12 col-md-12">
                     <div class="card">
                         <div class="card-header">
                             <h5>
-                                <span>Order ID:</span>
+                                <span>{{ trans('general.order_id') }}:</span>
                                 <span class="font-weight-bold">#{{ $sales->order_number }}</span>
                                 <span class="ml-2 badge {{ \App\Models\Order::LABELS[$sales->status]['badge'] }}">{{ \App\Models\Order::LABELS[$sales->status]['label'] }}</span>
                             </h5>
@@ -37,11 +37,14 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-sm-12 col-md-6">
                                         <div class="mt-1"><i data-feather="calendar"></i> {{ date('F j, Y h:i:s a', strtotime($sales->created_at)) }}</div>
-                                        <div class="mt-1">Order Status : {{ \App\Models\Order::LABELS[$sales->status]['label'] }}</div>
+                                        <div class="mt-1">{{ trans('general.order_status') }} : {{ \App\Models\Order::LABELS[$sales->status]['label'] }}</div>
                                         @if(isset($sales->assignedTo->fullname))
-                                            <div class="mt-1">Assigned To : {{ $sales->assignedTo->fullname }}</div>
+                                            <div class="mt-1">{{ trans('general.assigned_to') }} : {{ $sales->assignedTo->fullname }}</div>
                                         @endif
-                                        <div class="mt-1 text-danger">Special Instructions : {{ $sales->order_notes }}</div>
+                                        <div class="mt-1 text-danger">{{ trans('general.special_instructions') }} : {{ $sales->order_notes }}</div>
+                                        @if(isset($sales->returned_reason))
+                                            <div class="mt-1 text-danger"> : {{ $sales->order_notes }}</div>
+                                        @endif
                                     </div>
                                     <input type="hidden" value="{{ $sales->id }}" name="order_id">
                                     @if($sales->status != \App\Models\Order::CANCELLED && (auth()->user()->user_type_id == \App\Models\User::ADMIN))
@@ -59,8 +62,18 @@
                                     @endif
                                     <div class="col-lg-2 col-sm-12 col-md-2">
                                         <a class="btn btn-primary mt-4" target="_blank" href="{{ route('sales.downloadReceipt', $sales->id) }}">
-                                            <i data-feather="printer"></i> Print Receipt
+                                            <i data-feather="printer"></i> {{ trans('general.print_receipt') }}
                                         </a>
+                                    </div>
+                                    <div class="col-lg-12 col-sm-12 col-md-12 cancellation-reason-div" style="display: none;">
+                                        <form action="{{ route('sales.cancel', $sales->id) }}" method="POST">
+                                            {{ @csrf_field() }}
+                                            <x-text-input id="rejection_status" type="hidden" name="rejection_status" :value="old('rejection_status')"/>
+                                            <x-text-area id="cancellation_reason" name="cancellation_reason" :value="old('cancellation_reason')" required autofocus autocomplete="off" min="1" placeholder="{{ trans('general.cancellation_reason') }}" />
+                                            <x-primary-button class="btn btn-primary">
+                                                {{ __('Submit') }}
+                                            </x-primary-button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -73,7 +86,7 @@
             <div class="row">
                 <div class="col-lg-6 col-sm-12 col-md-6">
                     <div class="card">
-                        <div class="card-header">Order Details</div>
+                        <div class="card-header">{{ trans('general.order_details') }}</div>
                         <div class="card-body">
                             @if(!empty($sales->orderDetails))
                                 @foreach($sales->orderDetails as $detail)
@@ -96,19 +109,19 @@
                 </div>
                 <div class="col-lg-6 col-sm-12 col-md-6">
                     <div class="card">
-                        <div class="card-header">Order Amount</div>
+                        <div class="card-header">{{ trans('general.order_amount') }}</div>
                         <div class="card-body">
                             <div>
-                                <span>Subtotal</span>
+                                <span>{{ trans('general.subtotal') }}</span>
                                 <span class="float-right font-weight-bold">MAD {{ number_format($sales->amount, 2) }}</span>
                             </div>
                             <div>
-                                <span>Tax</span>
+                                <span>{{ trans('general.tax') }}</span>
                                 <span class="float-right font-weight-bold">MAD 0.00</span>
                             </div>
                             <hr>
                             <div>
-                                <span>Grand Total</span>
+                                <span>{{ trans('general.grand_total') }}</span>
                                 <span class="float-right font-weight-bold">MAD {{ number_format($sales->amount, 2) }}</span>
                             </div>
                         </div>
@@ -117,35 +130,35 @@
                 <div class="col-lg-6 col-sm-12 col-md-6">
                     <div class="card">
                         <div class="card-header">
-                            Delivery Information
+                            {{ trans('general.delivery_information') }}
                         </div>
                         <div class="card-body">
                             <div>
-                                <span>Name :</span>
+                                <span>{{ trans('general.name') }} :</span>
                                 <span>{{ $sales->first_name }} {{ $sales->last_name }}</span>
                             </div>
                             <div>
-                                <span>Email :</span>
+                                <span>{{ trans('general.email') }} :</span>
                                 <span>{{ $sales->email }}</span>
                             </div>
                             <div>
-                                <span>Mobile :</span>
+                                <span>{{ trans('general.mobile') }} :</span>
                                 <span>{{ $sales->phone }}</span>
                             </div>
                             <div>
-                                <span>Country</span>
+                                <span>{{ trans('general.country') }}</span>
                                 <span>{{ $sales->country->name }}</span>
                             </div>
                             <div>
-                                <span>City</span>
+                                <span>{{ trans('general.city') }}</span>
                                 <span>{{ $sales->city }}</span>
                             </div>
                             <div>
-                                <span>State</span>
+                                <span>{{ trans('general.state') }}</span>
                                 <span>{{ $sales->state }}</span>
                             </div>
                             <div>
-                                <span>Address :</span>
+                                <span>{{ trans('general.address') }} :</span>
                                 <span>{{ $sales->street_address}}, {{ $sales->zip_code }}</span>
                             </div>
                         </div>
@@ -161,8 +174,14 @@
             $(document).on('change','select[name="status"]', function(){
                 var selectedStatus = $(this).val();
                 var orderId = $('input[name="order_id"]').val();
-                if(selectedStatus != '')
+                if(selectedStatus == 'cancelled' || selectedStatus == 'returned')
                 {
+                    $('.cancellation-reason-div').show('slow');
+                    $('input[name="rejection_status"]').val(selectedStatus);
+                }
+                else if(selectedStatus != '')
+                {
+                    $('.cancellation-reason-div').hide('slow');
                     $.ajax({
                         url : '{{ route("sales.change.status") }}',
                         method : 'POST',

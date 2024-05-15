@@ -116,6 +116,7 @@ Route::middleware(['auth', 'locale'])->group(function () {
         Route::get('data','getProductData')->name('getProductData');
         Route::post('change/status/{parameterId}','changeStatus')->name('changeStatus');
         Route::get('fetchProductAmount','fetchProductAmount')->name('fetchProductAmount');
+        Route::post('cancel/{orderId}','cancel')->name('cancel');
     });
 
     Route::name('notification.')->prefix('notifications')->controller(NotificationController::class)->group(function(){
@@ -136,6 +137,11 @@ Route::middleware(['auth', 'locale'])->group(function () {
     });
     Route::name('reports.')->prefix('reports')->controller(ReportingController::class)->group(function(){
         Route::get('/','index')->name('index');
+        Route::get('getReportData','getReportData')->name('getReportData');
+        Route::get('/export-pdf', 'exportPDF')->name('exportPDF');
+        Route::get('/export-excel', 'exportExcel')->name('exportExcel');
+
+
     });
 
 

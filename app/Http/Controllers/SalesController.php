@@ -20,7 +20,12 @@ class SalesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public $title = "Sales";
+    public $title;
+
+    public function __construct()
+    {
+        $this->title = trans('general.sales');
+    }
     public function index()
     {
         $this->authorize('viewAny',Order::class);
@@ -90,7 +95,7 @@ class SalesController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('sales.index')->with('success','Order has been created successfully');
+            return redirect()->route('sales.index')->with('success',trans('general.order_created_success'));
         }
         catch (\Exception $e)
         {
@@ -170,12 +175,12 @@ class SalesController extends Controller
         $user = User::findOrFail($employeeId);
         $order = Order::findOrFail($orderId);
         $link = route('sales.show', $orderId);
-        $notificationMessage = $order->order_number.' has been assigned to you, Please check the details and take action accordingly.';
+        $notificationMessage = $order->order_number.' '.trans('general.order_assigned_to_you');
         $user->notify(new AssignToEmployee($link, $notificationMessage));
 
         return response()->json([
             'status' => true,
-            'message' => 'Order has been assigned to employee'
+            'message' => trans('general.order_assigned_to_employee')
         ]);
     }
 
@@ -194,7 +199,7 @@ class SalesController extends Controller
 
         return response()->json([
          'status' => true,
-         'message' => 'Status changed successfully'
+         'message' => trans('general.status_changed_success'),
         ]);
     }
 
@@ -243,4 +248,32 @@ class SalesController extends Controller
             'price' => $product->price
         ]);
     }
+
+    public function cancel(Request $request, $orderId)
+    {
+        try {
+            DB::beginTransaction();
+
+            $validatedData = $request->validate([
+                'cancellation_reason' => 'required|string|max:255',
+                'rejection_status' => 'required|string'
+
+            ]);
+
+            Order::where('id', $orderId)->update([
+                'returned_reason' => $request['cancellation_reason'],
+                'status' => $request['rejection_status']
+            ]);
+
+            DB::commit();
+            return redirect()->route('sales.show', $orderId)->with('success',trans('general.order_cancelled_status'));
+        }
+        catch (\Exception $e)
+        {
+            DB::rollBack();
+            return redirect()->back()->withErrors('Error processing your order: ' . $e->getMessage());
+        }
+    }
+
+
 }

@@ -1,6 +1,6 @@
 <x-app-layout title="{{ $title }}">
     <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
-        <x-page-heading title="{{ __('Products') }}"></x-page-heading>
+        <x-page-heading title="{{ trans('general.products') }}"></x-page-heading>
         <x-right-side-button link="{{ route('products.create') }}" title="Create"></x-right-side-button>
         <x-alert></x-alert>
         <div class="container-fluid card mt-3">
@@ -10,14 +10,14 @@
                         <table id="dataTable" class="table">
                           <thead>
                             <tr>
-                              <th>Product Name</th>
-                              <th>Serial</th>
-                              <th>Supplier</th>
-                              <th>Category</th>
-                              <th>Price</th>
-                              <th>Available Quantity</th>
-                              <th>Status</th>
-                              <th>Action</th>
+                              <th>{{ trans('general.product_name') }}</th>
+                              <th>{{ trans('general.serial') }}</th>
+                              <th>{{ trans('general.supplier') }}</th>
+                              <th>{{ trans('general.category') }}</th>
+                              <th>{{ trans('general.price') }}</th>
+                              <th>{{ trans('general.available_quantity') }}</th>
+                              <th>{{ trans('general.status') }}</th>
+                              <th>{{ trans('general.action') }}</th>
                             </tr>
                           </thead>
                           <tbody>

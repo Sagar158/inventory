@@ -20,9 +20,9 @@ class SalesPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Order $order): bool
+    public function view(User $user): bool
     {
-        //
+        return Helper::checkUserPermission('reporting.view');
     }
 
     /**

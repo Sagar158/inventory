@@ -14,7 +14,12 @@ class ProductsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public $title = "Products";
+    public $title;
+
+    public function __construct()
+    {
+        $this->title = trans('general.products');
+    }
     public function index()
     {
         $title = $this->title;

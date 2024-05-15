@@ -117,8 +117,9 @@
                                      </div>
                                      <div class="col-md-8">
                                         <div class="text-center text-md-start pt-3 pt-md-0">
+
                                            <h5 class="text-truncate"><a href="{{ route('products.show', $recent->id) }}" class="text-dark">{{ $recent->title }}</a></h5>
-                                           <h5 class="my-0"><span class="text-muted me-2">{{ trans('general.status') }} : </span> <span class="{{ $recent->status == 'available' ? 'text-success' : 'text-danger' }}">{{ \App\Helpers\Helper::$status[$recent->status] }}</span></h5>
+                                           <h5 class="my-0"><span class="text-muted me-2">{{ trans('general.status') }} : </span> <span class="{{ $recent->status == 'available' ? 'text-success' : 'text-danger' }}">{{ \App\Models\Products::$status[$recent->status] }}</span></h5>
                                            <h5 class="my-0"><span class="text-muted me-2">{{ trans('general.quantity') }} : </span> <span> {{ ucfirst($recent->quantity) }}</span></h5>
                                            <h5 class="my-0"><span class="text-muted me-2">{{ trans('general.category') }} : </span> <span> {{ ucfirst($recent->category->name) }}</span></h5>
                                         </div>
