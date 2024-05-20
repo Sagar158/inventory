@@ -46,15 +46,18 @@
         <script src="{{ asset('assets/js/apexcharts.js') }}"></script>
         <script>
             $(document).ready(function(){
-                lineChart('quarterlyProdutSales');
-                barChart('yearlySales');
-                donutChart('productWiseChart');
-                var data = @json($data);
+                var processedSalesData = @json($processedSalesData);
+                lineChart('quarterlyProdutSales', processedSalesData);
+                var yearlySalesData = @json($filledSales);
+                barChart('yearlySales', yearlySalesData);
 
+                var TopfiveSalesProduct = @json($formattedData);
+                donutChart('productWiseChart',TopfiveSalesProduct);
+                var data = @json($data);
                 pieChart('productWiseSupplier', data);
             });
 
-            function lineChart(chartId)
+            function lineChart(chartId, data)
             {
                 // Apex Line chart start
                 var options = {
@@ -70,24 +73,10 @@
                         bottom: -6
                     }
                     },
-                    series: [
-                    {
-                        name: "Product A",
-                        data: [45, 52, 38, 45]
-                    },
-                    {
-                        name: "Product B",
-                        data: [12, 42, 68, 33]
-                    },
-                    {
-                        name:
-                        "Product C",
-                        data: [8, 32, 48, 53]
-                    }
-                    ],
+                    series: data,
                     xaxis: {
                     type: "datetime",
-                    categories: ["2015", "2016", "2017", "2018"]
+                    categories: ["Q1", "Q2", "Q3", "Q4"]
                     },
                     markers: {
                     size: 0
@@ -120,8 +109,16 @@
                 apexLineChart.render()
             }
 
-            function barChart(chartId)
+            function barChart(chartId, data)
             {
+                var years = data.map(function(item) {
+                    return '01/01/'+item.year;
+                });
+
+                var totalSales = data.map(function(item) {
+                    return item.total_sales;
+                });
+
                 // Apex Bar chart start
                 var options = {
                     chart: {
@@ -138,11 +135,11 @@
                     },
                     series: [{
                     name: 'sales',
-                    data: [30,40,45,50,49,60,70,91,125]
+                    data: totalSales
                     }],
                     xaxis: {
                     type: 'datetime',
-                    categories: ['01/01/1991','01/01/1992','01/01/1993','01/01/1994','01/01/1995','01/01/1996','01/01/1997', '01/01/1998','01/01/1999']
+                    categories: years
                     }
                 }
 
@@ -151,8 +148,16 @@
                 apexBarChart.render();
             }
 
-            function donutChart(chartId)
+            function donutChart(chartId, data)
             {
+                var productName = data.map(function(item) {
+                    return item.product_name;
+                });
+
+                var totalQuantity = data.map(function(item) {
+                    return item.total_quantity;
+                });
+
                 var options = {
                                 chart: {
                                 height: 300,
@@ -169,7 +174,9 @@
                                 dataLabels: {
                                 enabled: false
                                 },
-                                series: [44, 55, 13, 33]
+                                series: totalQuantity,
+                                labels: productName
+
                             };
 
                 var chart = new ApexCharts(document.querySelector("#"+chartId), options);
@@ -186,7 +193,6 @@
                 var productCounts = data.map(function(item) {
                     return item.product_count;
                 });
-                console.log(supplierNames);
 
                 var options = {
                     chart: {

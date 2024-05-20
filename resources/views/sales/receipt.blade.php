@@ -80,8 +80,8 @@
                         <tr>
                             <td>{{ $detail->product->product_name }}</td>
                             <td>{{ $detail->quantity }}</td>
-                            <td>${{ number_format($detail->price,2) }}</td>
-                            <td>${{ number_format($detail->price, 2) }}</td>
+                            <td>MAD {{ number_format($detail->price,2) }}</td>
+                            <td>MAD {{ number_format($detail->price, 2) }}</td>
                         </tr>
                     @endforeach
                 @endif

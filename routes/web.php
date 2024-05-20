@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Models\NotificationController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\ThemeController;
@@ -114,6 +114,7 @@ Route::middleware(['auth', 'locale'])->group(function () {
         Route::post('/update/{id}', 'update')->name('update');
         Route::post('/delete/{id}', 'destroy')->name('destroy');
         Route::get('data','getProductData')->name('getProductData');
+
         Route::post('change/status/{parameterId}','changeStatus')->name('changeStatus');
         Route::get('fetchProductAmount','fetchProductAmount')->name('fetchProductAmount');
         Route::post('cancel/{orderId}','cancel')->name('cancel');

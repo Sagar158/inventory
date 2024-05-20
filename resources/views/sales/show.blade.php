@@ -100,7 +100,7 @@
                                         <span>
                                             {{ $detail->product->product_name }} - #{{ $detail->product->product_number }}
                                         </span>
-                                        <span class="float-right font-weight-bold">${{ number_format($detail->price, 2) }}</span>
+                                        <span class="float-right font-weight-bold">MAD {{ number_format($detail->price, 2) }}</span>
                                     </div>
                                 @endforeach
                             @endif
