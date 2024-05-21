@@ -75,7 +75,7 @@
             </div>
             <!-- End Top Search -->
 
-            <div class="container d-flex justify-content-between align-items-center">
+            <div class="container-fluid d-flex justify-content-between align-items-center">
 
 
                 <!-- Start Header Navigation -->

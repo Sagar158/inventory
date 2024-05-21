@@ -303,7 +303,7 @@ Version: 1.0
 .navbar .attr-right .attr-nav li .call h5 {
     margin: 0;
     font-weight: 800;
-    font-size: 20px;
+    font-size: 15px;
     letter-spacing: 0.6px;
 }
 
@@ -2180,7 +2180,7 @@ nav.navbar.validnavs.brand-center {
     nav.navbar ul.nav>li>a {
         padding: 30px 15px;
         font-weight: 800;
-        font-size: 14px;
+        font-size: 12px;
         text-transform: uppercase;
     }
     nav.navbar.attr-border-full ul.nav>li>a,

@@ -108,7 +108,7 @@ class SupplierController extends Controller
     public function getSupplierData()
     {
         $this->authorize('viewAny',Supplier::class);
-        $query = Supplier::query();
+        $query = Supplier::orderBy('created_at','DESC');
 
         return DataTables::of($query)
             ->addColumn('action', function ($supplier) {
